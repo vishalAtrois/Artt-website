@@ -36,7 +36,7 @@ const ArtCard = ({ art }) => {
           <p className="text-[14px] sm:text-[16px] text-gray-600 font-normal">
             {art.category}
           </p>
-        </div>
+        </div>     
 
         {/* See Details Button */}
         <button className="bg-white hover:bg-gray-50 transition-colors py-2.5 sm:py-3 px-4 sm:px-6 rounded-full flex items-center justify-center sm:justify-start gap-2 sm:gap-3 shadow-sm text-[14px] sm:text-[16px]">
