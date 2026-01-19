@@ -15,7 +15,7 @@ const LatestPaintings = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
         {latestArtworks.map((art) => (
-          <Link key={art.id} href={`/paintings/${art.id}`} className="block">
+          <Link key={art.id} href={`/Paintings/${art.id}`} className="block">
             <div className="bg-[#e8e4d7] rounded-3xl p-5 sm:p-8 md:p-10 relative hover:bg-[#ddd7c9] transition">
 
               {/* For Sale Badge */}
