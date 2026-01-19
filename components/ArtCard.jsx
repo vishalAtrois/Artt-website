@@ -43,7 +43,7 @@ const ArtCard = ({ art }) => {
           <span className="font-medium text-black">See details</span>
           <ArrowRight size={20} />
         </button>
-      </div>
+      </div>       
     </div>  
   );
 };
