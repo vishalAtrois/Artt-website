@@ -44,7 +44,7 @@ const ArtCard = ({ art }) => {
           <ArrowRight size={20} />
         </button>
       </div>
-    </div>
+    </div>  
   );
 };
 
