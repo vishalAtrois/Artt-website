@@ -1,8 +1,8 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "Next Starter",
-  description: "Next.js + Tailwind Starter",
+  title: "Art website",
+  description: "Art",
 };
 
 export default function RootLayout({ children }) {
