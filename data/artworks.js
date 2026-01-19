@@ -5,6 +5,8 @@ export const artworks = [
     category: "Abstract Expressions",
     image: "/Images/LadyPhoto.jpg",
     forSale: true,
+    description:
+    "Dark obsidian waves crash into layered cream and ochre textures, bold abstraction with powerful contrast and energy.",
     layout: "vertical",
   },
   {
@@ -12,6 +14,8 @@ export const artworks = [
     title: "Crimson Horizon",
     category: "Abstract Expressions",
     image: "/Images/painting1.jpeg",
+    description:
+    "Dark obsidian waves crash into layered cream and ochre textures, bold abstraction with powerful contrast and energy.",
     forSale: false,
     layout: "horizontal",
   },
@@ -21,6 +25,8 @@ export const artworks = [
     category: "Modern Minimal",
     image: "/Images/LivingRoom.jpg",
     forSale: true,
+    description:
+    "Dark obsidian waves crash into layered cream and ochre textures, bold abstraction with powerful contrast and energy.",
     layout: "vertical",
   },
   {
@@ -29,6 +35,8 @@ export const artworks = [
     category: "Contemporary Art",
     image: "/Images/teyrion.jpg",
     forSale: true,
+    description:
+    "Dark obsidian waves crash into layered cream and ochre textures, bold abstraction with powerful contrast and energy.",
     layout: "horizontal",
   },
 ];
