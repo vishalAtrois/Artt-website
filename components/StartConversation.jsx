@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 
 export default function StartConversation() {
   return (
@@ -152,16 +153,17 @@ export default function StartConversation() {
 
           {/* Button */}
           <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            type="submit"
-            className="w-full bg-[#4b463f] text-white py-4 rounded-full flex items-center justify-center gap-3 hover:bg-black transition"
-          >
-            Send message
-            <span className="w-8 h-8 bg-white text-black rounded-full flex items-center justify-center">
-              →
-            </span>
-          </motion.button>
+  whileHover={{ scale: 1.02 }}
+  whileTap={{ scale: 0.98 }}
+  type="submit"
+  className="w-full bg-[#4b463f] text-white py-4 rounded-full flex items-center justify-center gap-3 hover:bg-black transition"
+>
+  Send message
+
+  <span className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+    <ArrowRight className="w-5 h-5 text-black stroke-[3]" />
+  </span>
+</motion.button>
         </motion.form>
       </motion.div>
     </section>
