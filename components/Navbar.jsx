@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { FaTiktok, FaXTwitter, FaInstagram } from "react-icons/fa6";
 import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -12,64 +13,148 @@ const Navbar = () => {
     <nav className="h-[90px] bg-[#f7f5ef] flex items-center justify-between px-[20px] md:px-[80px] relative z-50">
       
       {/* Left */}
-      <div className="flex items-center gap-2">
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.4 }}
+        className="flex items-center gap-2"
+      >
         <span className="w-[10px] h-[10px] rounded-full bg-white" />
         <span className="text-[16px] font-medium text-black">
           Christina
         </span>
-      </div>
+      </motion.div>
 
       {/* Desktop Menu */}
-      <ul className="hidden md:flex gap-[40px]">
-        <li><Link href="/" className="text-[15px] text-black">Homepage</Link></li>
-        <li><Link href="/Paintings" className="text-[15px] text-black">Paintings</Link></li>
-        <li><Link href="/About" className="text-[15px] text-black">About</Link></li>
-        <li><Link href="/Contact" className="text-[15px] text-black">Contact</Link></li>
-      </ul>
+      <motion.ul
+        initial="hidden"
+        animate="show"
+        variants={{
+          hidden: {},
+          show: { transition: { staggerChildren: 0.12 } },
+        }}
+        className="hidden md:flex gap-[40px]"
+      >
+        {["Homepage", "Paintings", "About", "Contact"].map((item, i) => (
+          <motion.li
+            key={item}
+            variants={{
+              hidden: { opacity: 0, y: -10 },
+              show: { opacity: 1, y: 0 },
+            }}
+            transition={{ duration: 0.3 }}
+          >
+            <Link
+              href={item === "Homepage" ? "/" : `/${item}`}
+              className="text-[15px] text-black"
+            >
+              {item}
+            </Link>
+          </motion.li>
+        ))}
+      </motion.ul>
 
       {/* Desktop Icons */}
-      <div className="hidden md:flex gap-[18px]">
-        <FaTiktok className="text-[16px] text-black" />
-        <FaXTwitter className="text-[16px] text-black" />
-        <FaInstagram className="text-[16px] text-black" />
-      </div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.4, delay: 0.3 }}
+        className="hidden md:flex gap-[18px]"
+      >
+        <motion.span whileHover={{ y: -3 }}>
+          <FaTiktok className="text-[16px] text-black" />
+        </motion.span>
+        <motion.span whileHover={{ y: -3 }}>
+          <FaXTwitter className="text-[16px] text-black" />
+        </motion.span>
+        <motion.span whileHover={{ y: -3 }}>
+          <FaInstagram className="text-[16px] text-black" />
+        </motion.span>
+      </motion.div>
 
       {/* Hamburger */}
-      <button
+      <motion.button
+        whileTap={{ scale: 0.9 }}
         className="md:hidden text-black text-[26px]"
         onClick={() => setOpen(!open)}
         aria-label="Toggle Menu"
       >
-        {open ? <HiOutlineX /> : <HiOutlineMenu />}
-      </button>
+        <AnimatePresence mode="wait">
+          {open ? (
+            <motion.span
+              key="close"
+              initial={{ rotate: -90, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              exit={{ rotate: 90, opacity: 0 }}
+              transition={{ duration: 0.25 }}
+            >
+              <HiOutlineX />
+            </motion.span>
+          ) : (
+            <motion.span
+              key="menu"
+              initial={{ rotate: 90, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              exit={{ rotate: -90, opacity: 0 }}
+              transition={{ duration: 0.25 }}
+            >
+              <HiOutlineMenu />
+            </motion.span>
+          )}
+        </AnimatePresence>
+      </motion.button>
 
       {/* Mobile Menu */}
-      <div
-        className={`absolute top-[90px] left-0 w-full bg-[#f7f5ef] md:hidden transition-all duration-300 ${
-          open ? "opacity-100 visible" : "opacity-0 invisible"
-        } z-50`}
-      >
-        <div className="flex flex-col items-center gap-6 py-6">
-          <Link href="/" onClick={() => setOpen(false)} className="text-[15px] text-black">
-            Homepage
-          </Link>
-          <Link href="/Paintings" onClick={() => setOpen(false)} className="text-[15px] text-black">
-            Paintings
-          </Link>
-          <Link href="/About" onClick={() => setOpen(false)} className="text-[15px] text-black">
-            About
-          </Link>
-          <Link href="/Contact" onClick={() => setOpen(false)} className="text-[15px] text-black">
-            Contact
-          </Link>
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="absolute top-[90px] left-0 w-full bg-[#f7f5ef] md:hidden z-50"
+          >
+            <motion.div
+              initial="hidden"
+              animate="show"
+              variants={{
+                hidden: {},
+                show: { transition: { staggerChildren: 0.1 } },
+              }}
+              className="flex flex-col items-center gap-6 py-6"
+            >
+              {["Homepage", "Paintings", "About", "Contact"].map((item) => (
+                <motion.div
+                  key={item}
+                  variants={{
+                    hidden: { opacity: 0, y: -10 },
+                    show: { opacity: 1, y: 0 },
+                  }}
+                >
+                  <Link
+                    href={item === "Homepage" ? "/" : `/${item}`}
+                    onClick={() => setOpen(false)}
+                    className="text-[15px] text-black"
+                  >
+                    {item}
+                  </Link>
+                </motion.div>
+              ))}
 
-          <div className="flex gap-[18px] pt-2">
-            <FaTiktok className="text-[16px] text-black" />
-            <FaXTwitter className="text-[16px] text-black" />
-            <FaInstagram className="text-[16px] text-black" />
-          </div>
-        </div>
-      </div>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3 }}
+                className="flex gap-[18px] pt-2"
+              >
+                <FaTiktok className="text-[16px] text-black" />
+                <FaXTwitter className="text-[16px] text-black" />
+                <FaInstagram className="text-[16px] text-black" />
+              </motion.div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </nav>
   );
