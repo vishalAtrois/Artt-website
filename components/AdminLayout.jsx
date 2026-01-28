@@ -64,7 +64,7 @@ export default function AdminLayout({ children }) {
               x: sidebarOpen ? 0 : (typeof window !== 'undefined' && window.innerWidth >= 768 ? 0 : -300) 
             }}
             exit={{ x: -300 }}
-            className="fixed md:static inset-y-0 left-0 z-40 w-64 bg-white border-r border-gray-200"
+            className="fixed md:sticky inset-y-0 md:top-0 left-0 z-40 w-64 h-screen bg-white border-r border-gray-200"
           >
               <div className="h-full flex flex-col">
                 <div className="p-6 border-b border-gray-200">
@@ -119,7 +119,7 @@ export default function AdminLayout({ children }) {
         )}
 
         {/* Main Content */}
-        <main className="flex-1 md:ml-0">
+        <main className="flex-1">
           <div className="p-6 md:p-8">{children}</div>
         </main>
       </div>
