@@ -1,8 +1,10 @@
 "use client";
 
 import ArtCard from "./ArtCard";
-import { artworks } from "@/data/artworks";
+import { artworks as defaultArtworks } from "@/data/artworks";
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { AdminStorage } from "@/lib/adminStorage";
 
 const container = {
   hidden: {},
@@ -14,6 +16,29 @@ const container = {
 };
 
 const ArtGrid = () => {
+  const [artworks, setArtworks] = useState(defaultArtworks);
+
+  useEffect(() => {
+    // Load artworks from admin storage (if available)
+    const storedArtworks = AdminStorage.getArtworks();
+    if (storedArtworks && storedArtworks.length > 0) {
+      setArtworks(storedArtworks);
+    }
+
+    // Listen for updates
+    const handleUpdate = () => {
+      const updated = AdminStorage.getArtworks();
+      if (updated && updated.length > 0) {
+        setArtworks(updated);
+      }
+    };
+
+    if (typeof window !== 'undefined') {
+      window.addEventListener('artworksUpdated', handleUpdate);
+      return () => window.removeEventListener('artworksUpdated', handleUpdate);
+    }
+  }, []);
+
   return (
     <section className="bg-[#f7f5ef] px-4 sm:px-6 md:px-[50px] py-10">
       <motion.div

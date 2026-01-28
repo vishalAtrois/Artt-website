@@ -3,8 +3,33 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { useState } from "react";
+import { AdminStorage } from "@/lib/adminStorage";
 
 export default function StartConversation() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    painting: "",
+    subject: "",
+    message: "",
+  });
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    AdminStorage.addContact(formData);
+    setSubmitted(true);
+    setFormData({
+      name: "",
+      email: "",
+      painting: "",
+      subject: "",
+      message: "",
+    });
+    setTimeout(() => setSubmitted(false), 3000);
+  };
+
   return (
     <section className="relative w-full bg-[#f6f4ef] py-28 px-6 overflow-hidden">
       
@@ -75,6 +100,7 @@ export default function StartConversation() {
           viewport={{ once: false }}
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="space-y-6"
+          onSubmit={handleSubmit}
         >
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -88,7 +114,10 @@ export default function StartConversation() {
               <input
                 type="text"
                 placeholder="Jane Smith"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 className="w-full rounded-md border border-gray-200 px-4 py-3 text-sm outline-none focus:ring-1 focus:ring-black"
+                required
               />
             </motion.div>
 
@@ -102,7 +131,10 @@ export default function StartConversation() {
               <input
                 type="email"
                 placeholder="example@example.com"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 className="w-full rounded-md border border-gray-200 px-4 py-3 text-sm outline-none focus:ring-1 focus:ring-black"
+                required
               />
             </motion.div>
           </div>
@@ -118,7 +150,9 @@ export default function StartConversation() {
             </label>
             <input
               type="text"
-              placeholder="Time Won’t Wait"
+              placeholder="Time Won't Wait"
+              value={formData.painting}
+              onChange={(e) => setFormData({ ...formData, painting: e.target.value })}
               className="w-full rounded-md border border-gray-200 px-4 py-3 text-sm outline-none focus:ring-1 focus:ring-black"
             />
           </motion.div>
@@ -133,6 +167,8 @@ export default function StartConversation() {
             <input
               type="text"
               placeholder="Painting Order"
+              value={formData.subject}
+              onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
               className="w-full rounded-md border border-gray-200 px-4 py-3 text-sm outline-none focus:ring-1 focus:ring-black"
             />
           </motion.div>
@@ -146,24 +182,35 @@ export default function StartConversation() {
             <label className="text-sm text-black block mb-2">Message</label>
             <textarea
               rows="4"
-              placeholder='I would like to purchase the "Time Won’t Wait" painting...'
+              placeholder='I would like to purchase the "Time Won't Wait" painting...'
+              value={formData.message}
+              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
               className="w-full rounded-md border border-gray-200 px-4 py-3 text-sm outline-none focus:ring-1 focus:ring-black resize-none"
             />
           </motion.div>
 
           {/* Button */}
+          {submitted && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="p-3 bg-green-100 text-green-800 rounded-lg text-sm text-center"
+            >
+              Message sent successfully!
+            </motion.div>
+          )}
           <motion.button
-  whileHover={{ scale: 1.02 }}
-  whileTap={{ scale: 0.98 }}
-  type="submit"
-  className="w-full bg-[#4b463f] text-white py-4 rounded-full flex items-center justify-center gap-3 hover:bg-black transition"
->
-  Send message
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            type="submit"
+            className="w-full bg-[#4b463f] text-white py-4 rounded-full flex items-center justify-center gap-3 hover:bg-black transition"
+          >
+            Send message
 
-  <span className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-    <ArrowRight className="w-5 h-5 text-black stroke-[3]" />
-  </span>
-</motion.button>
+            <span className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+              <ArrowRight className="w-5 h-5 text-black stroke-[3]" />
+            </span>
+          </motion.button>
         </motion.form>
       </motion.div>
     </section>

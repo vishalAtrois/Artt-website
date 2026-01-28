@@ -3,11 +3,32 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
-import { artworks } from "@/data/artworks";
+import { artworks as defaultArtworks } from "@/data/artworks";
+import { AdminStorage } from "@/lib/adminStorage";
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 
 const LatestPaintings = () => {
-  const latestArtworks = artworks.slice(0, 2);
+  const [latestArtworks, setLatestArtworks] = useState(defaultArtworks.slice(0, 2));
+
+  useEffect(() => {
+    const storedArtworks = AdminStorage.getArtworks();
+    const artworks = storedArtworks && storedArtworks.length > 0 ? storedArtworks : defaultArtworks;
+    setLatestArtworks(artworks.slice(0, 2));
+
+    // Listen for updates
+    const handleUpdate = () => {
+      const updated = AdminStorage.getArtworks();
+      if (updated && updated.length > 0) {
+        setLatestArtworks(updated.slice(0, 2));
+      }
+    };
+
+    if (typeof window !== 'undefined') {
+      window.addEventListener('artworksUpdated', handleUpdate);
+      return () => window.removeEventListener('artworksUpdated', handleUpdate);
+    }
+  }, []);
 
   return (
     <section className="bg-[#f7f5ef] px-4 sm:px-6 md:px-[80px] py-14 md:py-20">
