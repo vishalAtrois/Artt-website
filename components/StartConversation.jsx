@@ -182,7 +182,7 @@ export default function StartConversation() {
             <label className="text-sm text-black block mb-2">Message</label>
             <textarea
               rows="4"
-              placeholder='I would like to purchase the "Time Won't Wait" painting...'
+              placeholder='I would like to purchase the "Time Would not Wait" painting...'
               value={formData.message}
               onChange={(e) => setFormData({ ...formData, message: e.target.value })}
               className="w-full rounded-md border border-gray-200 px-4 py-3 text-sm outline-none focus:ring-1 focus:ring-black resize-none"
