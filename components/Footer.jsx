@@ -32,9 +32,9 @@ const Footer = () => {
             transition={{ duration: 0.5, ease: "easeOut" }}
             className="text-center md:text-left"
           >
-            <h3 className="text-lg font-medium mb-3">Christina</h3>
+            <h3 className="text-lg font-medium mb-3">AlfJssonart</h3>
             <p className="text-sm text-gray-600 mb-4 sm:mb-6">
-              christina@example.com
+            AlfJssonart@example.com
             </p>
 
             <div className="flex justify-center md:justify-start gap-5 text-lg text-black">

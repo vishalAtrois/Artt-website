@@ -117,8 +117,7 @@ export default function InAboutSection() {
             transition={{ duration: 0.4, delay: 0.4 }}
             className="font-[cursive] text-xl text-black"
           >
-            Christina Vale
-          </motion.p>
+AlfJssonart          </motion.p>
         </motion.div>
       </div>
     </section>

@@ -90,7 +90,8 @@ const AboutSection = () => {
             >
               <Image
                 src="/Images/LadyPhoto.jpg"
-                alt="Christina Vale"
+                alt="AlfJssonart
+                "
                 fill
                 sizes="(max-width: 768px) 200px, 
          (max-width: 1024px) 300px, 
@@ -100,7 +101,7 @@ const AboutSection = () => {
             </motion.div>
 
             <span className="font-[cursive] text-[18px] md:text-[20px] text-black">
-              Christina Vale
+            AlfJssonart
             </span>
           </motion.div>
         </motion.div>

@@ -14,7 +14,7 @@ const Hero = () => {
         transition={{ duration: 1.2, ease: "easeOut" }}
         className="absolute inset-0 flex items-center justify-center text-[120px] sm:text-[180px] md:text-[220px] font-semibold text-black/5 select-none"
       >
-        Christina
+        AlfJssonart
       </motion.h1>
 
       {/* Content */}
@@ -29,7 +29,7 @@ const Hero = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-[40px] sm:text-[52px] md:text-[64px] font-medium text-black"
           >
-            Christina
+            AlfJssonart
           </motion.h2>
 
           {/* Image */}
@@ -41,7 +41,7 @@ const Hero = () => {
           >
             <Image
               src="/Images/LadyPhoto.jpg"
-              alt="Christina"
+              alt="AlfJssonart"
               width={60}
               height={60}
               className="sm:w-20 sm:h-20 rounded-md object-cover"
@@ -54,7 +54,6 @@ const Hero = () => {
             transition={{ duration: 0.6, delay: 0.5 }}
             className="text-[40px] sm:text-[52px] md:text-[64px] font-medium text-black"
           >
-            Vale
           </motion.h2>
         </div>
 

@@ -21,7 +21,7 @@ const Navbar = () => {
       >
         <span className="w-[10px] h-[10px] rounded-full bg-white" />
         <span className="text-[16px] font-medium text-black">
-          Christina
+        AlfJssonart
         </span>
       </motion.div>
 
