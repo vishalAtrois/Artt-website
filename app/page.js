@@ -2,6 +2,7 @@ import AboutSection from "@/components/AboutSection";
 import ArtGrid from "@/components/ArtGrid";
 import CategoryNav from "@/components/CategoryNav";
 import ContactSection from "@/components/ContactSection";
+import FAQSection from "@/components/FAQSection";
 import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
  import Navbar from "@/components/Navbar";
@@ -22,9 +23,11 @@ export default function Home() {
         </section>
         <ViewAllPaintings />
         <AboutSection />
+<FAQSection />
         <section className="px-36">
         <CategoryNav />
         </section>
+
         <ContactSection />
         <Footer />
         {/* <UpcomingEventCard /> */}

@@ -5,10 +5,8 @@ import { motion } from "framer-motion";
 const categories = [
   "Abstract Expressions",
   "Compositions",
-  "Portraits",
-  "Landscape",
-  "Minimalism",
-  "Modern Art",
+  "Animals",
+   "Modern Art",
 ];
 
 // List ko double kar dete hain taaki loop smooth ho

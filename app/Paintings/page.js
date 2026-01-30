@@ -17,8 +17,6 @@ export default function paintings() {
       <section className="px-20">
         <ArtGrid />
         </section>
-       
-       
         <ContactSection />
         <Footer />
         {/* <UpcomingEventCard /> */}
