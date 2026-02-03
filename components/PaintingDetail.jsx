@@ -24,15 +24,23 @@ const PaintingDetail = ({ art }) => {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="relative w-[220px] sm:w-[280px] md:w-[360px] aspect-[3/4] bg-white rounded-xl overflow-hidden shadow-md"
           >
-            <Image
-              src={art.image}
-              alt={art.title}
-              fill
-              sizes="(max-width: 768px) 200px, 
-              (max-width: 1024px) 300px, 
-              400px"
-              className="object-cover"
-            />
+            {art.image?.startsWith('/') ? (
+              <Image
+                src={art.image}
+                alt={art.title}
+                fill
+                sizes="(max-width: 768px) 200px, 
+                (max-width: 1024px) 300px, 
+                400px"
+                className="object-cover"
+              />
+            ) : (
+              <img
+                src={art.image}
+                alt={art.title}
+                className="w-full h-full object-cover"
+              />
+            )}
           </motion.div>
         </motion.div>
 
@@ -84,7 +92,7 @@ const PaintingDetail = ({ art }) => {
 
             <div>
               <p className="text-gray-500">Year</p>
-              <p>2024</p>
+              <p>{art.year || 'N/A'}</p>
             </div>
 
             <div className="sm:col-span-2">
@@ -99,10 +107,10 @@ const PaintingDetail = ({ art }) => {
               <p>{art.forSale ? "Yes" : "No"}</p>
             </div>
 
-            {art.forSale && (
+            {art.forSale && art.price && (
               <div>
                 <p className="text-gray-500">Price</p>
-                <p>$2,300</p>
+                <p>${typeof art.price === 'number' ? art.price.toLocaleString() : art.price}</p>
               </div>
             )}
           </motion.div>

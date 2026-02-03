@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import AdminLayout from '@/components/AdminLayout';
 import { AdminStorage } from '@/lib/adminStorage';
+import { getProductsApi } from '@/lib/adminApi';
 import { Image, Mail, Tag, TrendingUp } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -13,19 +14,36 @@ export default function AdminDashboard() {
     unreadContacts: 0,
     totalCategories: 0,
   });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const artworks = AdminStorage.getArtworks();
+    loadStats();
+  }, []);
+
+  const loadStats = async () => {
+    setLoading(true);
+    const token = AdminStorage.getAccessToken();
     const contacts = AdminStorage.getContacts();
     const categories = AdminStorage.getCategories();
+    
+    // Get artworks from API
+    let artworksCount = 0;
+    try {
+      const res = await getProductsApi(token);
+      const list = res?.data?.data ?? [];
+      artworksCount = Array.isArray(list) ? list.length : 0;
+    } catch (err) {
+      console.error('Failed to load artworks:', err);
+    }
 
     setStats({
-      totalArtworks: artworks.length,
+      totalArtworks: artworksCount,
       totalContacts: contacts.length,
       unreadContacts: contacts.filter(c => !c.read).length,
       totalCategories: categories.length,
     });
-  }, []);
+    setLoading(false);
+  };
 
   const statCards = [
     {

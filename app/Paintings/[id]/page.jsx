@@ -1,39 +1,50 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { artworks as defaultArtworks } from "@/data/artworks";
-import { AdminStorage } from "@/lib/adminStorage";
+import { getUserProductsApi } from "@/lib/userApi";
 import PaintingDetail from "@/components/PaintingDetail";
 import Navbar from "@/components/Navbar";
 import LatestPaintings from "@/components/LatestPaintings";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 
+function normalizeProduct(item) {
+  const inStock = item.inStock;
+  const forSale = inStock === true || inStock === 'yes' || item.forSale === true;
+  return {
+    id: item.id ?? item._id,
+    title: item.title ?? '',
+    category: item.category ?? '',
+    image: item.image ?? '',
+    description: item.description ?? '',
+    forSale,
+    layout: item.layout || 'vertical',
+    price: item.price,
+    year: item.year,
+  };
+}
+
 const PaintingPage = ({ params }) => {
   const [art, setArt] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const storedArtworks = AdminStorage.getArtworks();
-    const artworks = storedArtworks && storedArtworks.length > 0 ? storedArtworks : defaultArtworks;
-    const foundArt = artworks.find((item) => item.id === Number(params.id));
-    setArt(foundArt);
-
-    // Listen for updates
-    const handleUpdate = () => {
-      const updated = AdminStorage.getArtworks();
-      if (updated && updated.length > 0) {
-        const found = updated.find((item) => item.id === Number(params.id));
-        setArt(found);
-      }
-    };
-
-    if (typeof window !== 'undefined') {
-      window.addEventListener('artworksUpdated', handleUpdate);
-      return () => window.removeEventListener('artworksUpdated', handleUpdate);
-    }
+    loadArtwork();
   }, [params.id]);
 
-  if (!art) return <div className="p-20">Painting not found</div>;
+  const loadArtwork = async () => {
+    setLoading(true);
+    const res = await getUserProductsApi();
+    // API returns { success: true, data: { totalCount, totalPages, currentPage, limit, data: Array } }
+    const list = res?.data?.data ?? [];
+    const normalized = Array.isArray(list) ? list.map(normalizeProduct) : [];
+    const foundArt = normalized.find((item) => String(item.id ?? item._id) === String(params.id));
+    setArt(foundArt);
+    setLoading(false);
+  };
+
+  if (loading) return <div className="p-20 text-center">Loading...</div>;
+  if (!art) return <div className="p-20 text-center">Painting not found</div>;
 
   return (
   <>

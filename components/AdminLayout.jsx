@@ -3,7 +3,9 @@
 import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
+import toast from 'react-hot-toast';
 import { AdminStorage } from '@/lib/adminStorage';
+import { logoutApi } from '@/lib/adminApi';
 import { 
   LayoutDashboard, 
   Image, 
@@ -11,7 +13,9 @@ import {
   Tag, 
   LogOut,
   Menu,
-  X 
+  X,
+  HelpCircle,
+  AlertTriangle
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -19,6 +23,8 @@ export default function AdminLayout({ children }) {
   const router = useRouter();
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [loggingOut, setLoggingOut] = useState(false);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   useEffect(() => {
     if (!AdminStorage.isAuthenticated()) {
@@ -26,9 +32,38 @@ export default function AdminLayout({ children }) {
     }
   }, [router]);
 
-  const handleLogout = () => {
-    AdminStorage.logout();
-    router.push('/admin');
+  const handleLogoutClick = () => {
+    setShowLogoutModal(true);
+  };
+
+  const handleLogoutConfirm = async () => {
+    const email = AdminStorage.getUser()?.email;
+    const refreshToken = AdminStorage.getRefreshToken();
+    setLoggingOut(true);
+    setShowLogoutModal(false);
+
+    try {
+      if (email && refreshToken) {
+        const res = await logoutApi(email, refreshToken);
+        if (res?.success) {
+          toast.success('Logged out successfully');
+        } else {
+          toast.error(res?.message || 'Logout failed');
+        }
+      } else {
+        toast.success('Logged out');
+      }
+    } catch (err) {
+      toast.error('Logout failed');
+    } finally {
+      AdminStorage.logout();
+      router.push('/admin');
+      setLoggingOut(false);
+    }
+  };
+
+  const handleLogoutCancel = () => {
+    setShowLogoutModal(false);
   };
 
   const menuItems = [
@@ -36,6 +71,7 @@ export default function AdminLayout({ children }) {
     { href: '/admin/artworks', label: 'Artworks', icon: Image },
     { href: '/admin/contacts', label: 'Contacts', icon: Mail },
     { href: '/admin/categories', label: 'Categories', icon: Tag },
+    { href: '/admin/faqs', label: 'FAQs', icon: HelpCircle },
   ];
 
   if (!AdminStorage.isAuthenticated()) {
@@ -96,11 +132,12 @@ export default function AdminLayout({ children }) {
 
                 <div className="p-4 border-t border-gray-200">
                   <button
-                    onClick={handleLogout}
-                    className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
+                    onClick={handleLogoutClick}
+                    disabled={loggingOut}
+                    className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors disabled:opacity-60"
                   >
                     <LogOut size={20} />
-                    <span>Logout</span>
+                    <span>{loggingOut ? 'Logging out...' : 'Logout'}</span>
                   </button>
                 </div>
               </div>
@@ -122,6 +159,73 @@ export default function AdminLayout({ children }) {
         <main className="flex-1">
           <div className="p-6 md:p-8">{children}</div>
         </main>
+
+        {/* Logout Confirmation Modal */}
+        <AnimatePresence>
+          {showLogoutModal && (
+            <>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={handleLogoutCancel}
+                className="fixed inset-0 bg-black bg-opacity-50 z-50"
+              />
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="fixed inset-0 z-50 flex items-center justify-center p-4"
+              >
+                <div
+                  onClick={(e) => e.stopPropagation()}
+                  className="bg-white rounded-2xl p-6 md:p-8 w-full max-w-md shadow-xl"
+                >
+                  <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-orange-100 rounded-full">
+                    <AlertTriangle className="text-orange-600" size={32} />
+                  </div>
+                  
+                  <h2 className="text-2xl font-semibold text-center mb-2">
+                    Confirm Logout
+                  </h2>
+                  
+                  <p className="text-gray-600 text-center mb-6">
+                    Are you sure you want to logout? You'll need to login again to access the admin panel.
+                  </p>
+
+                  <div className="flex gap-4">
+                    <button
+                      type="button"
+                      onClick={handleLogoutCancel}
+                      disabled={loggingOut}
+                      className="flex-1 bg-gray-100 text-gray-700 py-3 rounded-lg font-medium hover:bg-gray-200 transition-colors disabled:opacity-60"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleLogoutConfirm}
+                      disabled={loggingOut}
+                      className="flex-1 bg-[#4b463f] text-white py-3 rounded-lg font-medium hover:bg-black transition-colors disabled:opacity-60 flex items-center justify-center gap-2"
+                    >
+                      {loggingOut ? (
+                        <>
+                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                          Logging out...
+                        </>
+                      ) : (
+                        <>
+                          <LogOut size={18} />
+                          Logout
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );

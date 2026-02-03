@@ -3,32 +3,40 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
-import { artworks as defaultArtworks } from "@/data/artworks";
-import { AdminStorage } from "@/lib/adminStorage";
+import { getUserProductsApi } from "@/lib/userApi";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 
+function normalizeProduct(item) {
+  const inStock = item.inStock;
+  const forSale = inStock === true || inStock === 'yes' || item.forSale === true;
+  return {
+    id: item.id ?? item._id,
+    title: item.title ?? '',
+    category: item.category ?? '',
+    image: item.image ?? '',
+    description: item.description ?? '',
+    forSale,
+    layout: item.layout || 'vertical',
+    price: item.price,
+    year: item.year,
+  };
+}
+
 const LatestPaintings = () => {
-  const [latestArtworks, setLatestArtworks] = useState(defaultArtworks.slice(0, 2));
+  const [latestArtworks, setLatestArtworks] = useState([]);
 
   useEffect(() => {
-    const storedArtworks = AdminStorage.getArtworks();
-    const artworks = storedArtworks && storedArtworks.length > 0 ? storedArtworks : defaultArtworks;
-    setLatestArtworks(artworks.slice(0, 2));
-
-    // Listen for updates
-    const handleUpdate = () => {
-      const updated = AdminStorage.getArtworks();
-      if (updated && updated.length > 0) {
-        setLatestArtworks(updated.slice(0, 2));
-      }
-    };
-
-    if (typeof window !== 'undefined') {
-      window.addEventListener('artworksUpdated', handleUpdate);
-      return () => window.removeEventListener('artworksUpdated', handleUpdate);
-    }
+    loadArtworks();
   }, []);
+
+  const loadArtworks = async () => {
+    const res = await getUserProductsApi();
+    // API returns { success: true, data: { totalCount, totalPages, currentPage, limit, data: Array } }
+    const list = res?.data?.data ?? [];
+    const normalized = Array.isArray(list) ? list.map(normalizeProduct) : [];
+    setLatestArtworks(normalized.slice(0, 2));
+  };
 
   return (
     <section className="bg-[#f7f5ef] px-4 sm:px-6 md:px-[80px] py-14 md:py-20">
@@ -46,13 +54,13 @@ const LatestPaintings = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
         {latestArtworks.map((art, index) => (
           <motion.div
-            key={art.id}
+            key={art.id ?? art._id}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false }}
             transition={{ duration: 0.6, delay: index * 0.15 }}
           >
-            <Link href={`/Paintings/${art.id}`} className="block group">
+            <Link href={`/Paintings/${art.id ?? art._id}`} className="block group">
               <motion.div
                 whileHover={{ y: -4 }}
                 transition={{ duration: 0.3 }}
@@ -83,15 +91,23 @@ const LatestPaintings = () => {
                       h-[300px] sm:h-[340px] md:h-[380px]
                       bg-white rounded-xl overflow-hidden shadow-md`}
                   >
-                    <Image
-                      src={art.image}
-                      alt={art.title}
-                      fill
-                      sizes="(max-width: 768px) 200px, 
-                      (max-width: 1024px) 300px, 
-                      400px"
-                      className="object-cover"
-                    />
+                    {art.image?.startsWith('/') ? (
+                      <Image
+                        src={art.image}
+                        alt={art.title}
+                        fill
+                        sizes="(max-width: 768px) 200px, 
+                        (max-width: 1024px) 300px, 
+                        400px"
+                        className="object-cover"
+                      />
+                    ) : (
+                      <img
+                        src={art.image}
+                        alt={art.title}
+                        className="w-full h-full object-cover"
+                      />
+                    )}
                   </div>
                 </motion.div>
 

@@ -2,30 +2,74 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 import { AdminStorage } from '@/lib/adminStorage';
 import { motion } from 'framer-motion';
 
+const LOGIN_API_URL = 'https://art-website-liart.vercel.app/v1/admin/login';
+
 export default function AdminLogin() {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
-    // Redirect if already authenticated
     if (AdminStorage.isAuthenticated()) {
       router.push('/admin/dashboard');
     }
   }, [router]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setLoading(true);
 
-    if (AdminStorage.login(username, password)) {
-      router.push('/admin/dashboard');
-    } else {
-      setError('Invalid username or password');
+    const myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/json');
+
+    const raw = JSON.stringify({
+      email,
+      password,
+      roleType: 'admin',
+    });
+
+    const requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow',
+    };
+
+    try {
+      const response = await fetch(LOGIN_API_URL, requestOptions);
+      const result = await response.text();
+      let parsed = null;
+      try {
+        parsed = JSON.parse(result);
+      } catch {
+        setError('Invalid response from server.');
+        toast.error('Invalid response from server.');
+        return;
+      }
+
+      if (parsed?.success && parsed?.user && parsed?.tokens?.access?.token) {
+        AdminStorage.setAuthSession(parsed);
+        toast.success('Logged in successfully');
+        router.push('/admin/dashboard');
+        return;
+      }
+
+      const errMsg = parsed?.message || parsed?.error || 'Login failed.';
+      setError(errMsg);
+      toast.error(errMsg);
+    } catch (err) {
+      console.error('Login API error:', err);
+      setError('Network error. Please try again.');
+      toast.error('Network error. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -42,14 +86,14 @@ export default function AdminLogin() {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Username
+              Email
             </label>
             <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent outline-none"
-              placeholder="Enter username"
+              placeholder="Enter email"
               required
             />
           </div>
@@ -80,14 +124,15 @@ export default function AdminLogin() {
 
           <button
             type="submit"
-            className="w-full bg-[#4b463f] text-white py-3 rounded-lg font-medium hover:bg-black transition-colors"
+            disabled={loading}
+            className="w-full bg-[#4b463f] text-white py-3 rounded-lg font-medium hover:bg-black transition-colors disabled:opacity-60"
           >
-            Login
+            {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
 
         <p className="text-xs text-gray-500 text-center mt-6">
-          Default: admin / admin123
+          Use your admin email and password to sign in.
         </p>
       </motion.div>
     </div>

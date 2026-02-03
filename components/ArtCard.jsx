@@ -6,8 +6,9 @@ import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 const ArtCard = ({ art }) => {
+  const artId = art.id ?? art._id;
   return (
-    <Link href={`/Paintings/${art.id}`} className="block group">
+    <Link href={`/Paintings/${artId}`} className="block group">
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -36,15 +37,23 @@ const ArtCard = ({ art }) => {
             className="relative rounded-[12px] overflow-hidden bg-white shadow-sm"
           >
             <div className="relative aspect-[3/4] w-full">
-              <Image
-                src={art.image}
-                alt={art.title}
-                fill
-                sizes="(max-width: 768px) 200px, 
-                (max-width: 1024px) 300px, 
-                400px"
-                className="object-cover"
-              />
+              {art.image?.startsWith('/') ? (
+                <Image
+                  src={art.image}
+                  alt={art.title}
+                  fill
+                  sizes="(max-width: 768px) 200px, 
+                  (max-width: 1024px) 300px, 
+                  400px"
+                  className="object-cover"
+                />
+              ) : (
+                <img
+                  src={art.image}
+                  alt={art.title}
+                  className="w-full h-full object-cover"
+                />
+              )}
             </div>
           </motion.div>
         </div>
