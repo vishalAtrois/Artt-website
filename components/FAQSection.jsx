@@ -108,7 +108,7 @@ const FAQSection = () => {
                   >
                     <button
                       onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                      className={`w-full text-left p-6 rounded-[16px] flex items-center justify-between transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                      className={`w-full text-left px-4 py-1 rounded-[16px] flex items-center justify-between transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
                         openIndex === index ? 'bg-[#d9d5c7]' : 'bg-[#e2dfd4] hover:bg-[#d9d5c7]'
                       }`}
                     >
@@ -141,7 +141,7 @@ const FAQSection = () => {
                           }}
                           className="overflow-hidden"
                         >
-                          <div className="bg-white rounded-[24px] p-8 mt-3 shadow-sm border border-black/5">
+                          <div className="bg-white rounded-[24px] px-6 py-5 mt-2 shadow-sm border border-black/5">
                             <p className="text-[16px] md:text-[17px] leading-relaxed text-[#555] whitespace-pre-wrap">
                               {faq.answer || 'No answer'}
                             </p>
