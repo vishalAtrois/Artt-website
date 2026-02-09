@@ -49,14 +49,14 @@ export default function AdminLogin() {
       try {
         parsed = JSON.parse(result);
       } catch {
-        setError('Invalid response from server.');
-        toast.error('Invalid response from server.');
+        setError('Ogiltigt svar från servern.');
+        toast.error('Ogiltigt svar från servern.');
         return;
       }
 
       if (parsed?.success && parsed?.user && parsed?.tokens?.access?.token) {
         AdminStorage.setAuthSession(parsed);
-        toast.success('Logged in successfully');
+        toast.success('Inloggad framgångsrikt');
         router.push('/admin/dashboard');
         return;
       }
@@ -66,8 +66,8 @@ export default function AdminLogin() {
       toast.error(errMsg);
     } catch (err) {
       console.error('Login API error:', err);
-      setError('Network error. Please try again.');
-      toast.error('Network error. Please try again.');
+      setError('Nätverksfel. Försök igen.');
+      toast.error('Nätverksfel. Försök igen.');
     } finally {
       setLoading(false);
     }
@@ -80,13 +80,13 @@ export default function AdminLogin() {
         animate={{ opacity: 1, y: 0 }}
         className="bg-white rounded-2xl p-8 md:p-12 w-full max-w-md shadow-lg"
       >
-        <h1 className="text-3xl font-semibold mb-2 text-center">Admin Login</h1>
-        <p className="text-gray-600 text-center mb-8">Access the admin panel</p>
+        <h1 className="text-3xl font-semibold mb-2 text-center">Admin inloggning</h1>
+        <p className="text-gray-600 text-center mb-8">Öppna adminpanelen</p>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Email
+            E-post
             </label>
             <input
               type="email"
@@ -100,14 +100,14 @@ export default function AdminLogin() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Password
+            Lösenord
             </label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent outline-none"
-              placeholder="Enter password"
+              placeholder="Ange lösenord"
               required
             />
           </div>
@@ -127,12 +127,12 @@ export default function AdminLogin() {
             disabled={loading}
             className="w-full bg-[#4b463f] text-white py-3 rounded-lg font-medium hover:bg-black transition-colors disabled:opacity-60"
           >
-            {loading ? 'Logging in...' : 'Login'}
+            {loading ? 'inloggning.com...' : 'Inloggning'}
           </button>
         </form>
 
         <p className="text-xs text-gray-500 text-center mt-6">
-          Use your admin email and password to sign in.
+        Använd din administratörs-e-postadress och ditt lösenord för att logga in.
         </p>
       </motion.div>
     </div>

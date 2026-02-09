@@ -51,16 +51,16 @@ export default function AdminFAQs() {
         order: formData.order || '1',
       });
       if (res?.success) {
-        toast.success('FAQ added successfully');
+        toast.success('FAQ har lagts till');
         setShowModal(false);
         resetForm();
         loadFaqs();
       } else {
-        toast.error(res?.message || 'Failed to add FAQ');
+        toast.error(res?.message || 'Misslyckades med att lägga till vanliga frågor');
       }
     } catch (err) {
       console.error(err);
-      toast.error('Something went wrong');
+      toast.error('Något gick fel');
     } finally {
       setSubmitting(false);
     }
@@ -86,16 +86,16 @@ export default function AdminFAQs() {
     try {
       const res = await deleteFaqApi(token, faqToDelete._id ?? faqToDelete.id);
       if (res?.success) {
-        toast.success('FAQ deleted successfully');
+        toast.success('FAQ raderades framgångsrikt');
         setShowDeleteModal(false);
         setFaqToDelete(null);
         loadFaqs();
       } else {
-        toast.error(res?.message || 'Failed to delete FAQ');
+        toast.error(res?.message || 'Misslyckades med att ta bort vanliga frågor');
       }
     } catch (err) {
       console.error(err);
-      toast.error('Something went wrong');
+      toast.error('Något gick fel');
     } finally {
       setDeleting(false);
     }
@@ -111,8 +111,8 @@ export default function AdminFAQs() {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-semibold mb-2">FAQs</h1>
-            <p className="text-gray-600">Manage frequently asked questions</p>
+            <h1 className="text-3xl font-semibold mb-2">Vanliga frågor</h1>
+            <p className="text-gray-600">Hantera vanliga frågor</p>
           </div>
           <button
             onClick={() => {
@@ -122,17 +122,16 @@ export default function AdminFAQs() {
             className="flex items-center gap-2 bg-[#4b463f] text-white px-4 py-2 rounded-lg hover:bg-black transition-colors"
           >
             <Plus size={20} />
-            Add FAQ
-          </button>
+                        Lägg till FAQ          </button>
         </div>
 
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
           {loading ? (
-            <div className="p-12 text-center text-gray-500">Loading FAQs...</div>
+            <div className="p-12 text-center text-gray-500">Laddar vanliga frågor...</div>
           ) : faqs.length === 0 ? (
             <div className="p-12 text-center">
               <HelpCircle className="mx-auto text-gray-400 mb-4" size={48} />
-              <p className="text-gray-600">No FAQs yet. Add your first FAQ to get started.</p>
+              <p className="text-gray-600">Inga vanliga frågor än. Lägg till din första vanliga fråga för att komma igång.</p>
             </div>
           ) : (
             <div className="divide-y divide-gray-200">
@@ -160,18 +159,18 @@ export default function AdminFAQs() {
                             </span>
                           )}
                           <h3 className="text-lg font-semibold text-gray-900">
-                            {faq.question || 'No question'}
+                            {faq.question || 'Ingen fråga'}
                           </h3>
                         </div>
                         <p className="text-gray-600 mt-2 whitespace-pre-wrap">
-                          {faq.answer || 'No answer'}
+                          {faq.answer || 'Inget svar'}
                         </p>
                       </div>
                       <div className="flex items-center gap-2 ml-4">
                         <button
                           onClick={() => handleDeleteClick(faq)}
                           className="p-2 hover:bg-gray-100 rounded"
-                          title="Delete FAQ"
+                          title="Ta bort FAQ"
                         >
                           <Trash2 size={18} className="text-red-600" />
                         </button>
@@ -207,7 +206,7 @@ export default function AdminFAQs() {
                   onClick={(e) => e.stopPropagation()}
                   className="bg-white rounded-2xl p-6 md:p-8 w-full max-w-2xl max-h-[90vh] overflow-y-auto"
                 >
-                  <h2 className="text-2xl font-semibold mb-6">Add New FAQ</h2>
+                  <h2 className="text-2xl font-semibold mb-6">Lägg till nya vanliga frågor</h2>
 
                   <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
@@ -219,7 +218,7 @@ export default function AdminFAQs() {
                         value={formData.question}
                         onChange={(e) => setFormData({ ...formData, question: e.target.value })}
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent outline-none"
-                        placeholder="Enter the question"
+                        placeholder="Skriv in frågan"
                         required
                       />
                     </div>
@@ -233,7 +232,7 @@ export default function AdminFAQs() {
                         onChange={(e) => setFormData({ ...formData, answer: e.target.value })}
                         rows="4"
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent outline-none resize-none"
-                        placeholder="Enter the answer"
+                        placeholder="Ange svaret"
                         required
                       />
                     </div>
@@ -251,7 +250,7 @@ export default function AdminFAQs() {
                         min="1"
                       />
                       <p className="mt-1 text-xs text-gray-500">
-                        Optional: Set the display order (lower numbers appear first)
+                      Valfritt: Ange visningsordningen (lägre siffror visas först)
                       </p>
                     </div>
 
@@ -261,7 +260,7 @@ export default function AdminFAQs() {
                         disabled={submitting}
                         className="flex-1 bg-[#4b463f] text-white py-3 rounded-lg font-medium hover:bg-black transition-colors disabled:opacity-60"
                       >
-                        {submitting ? 'Creating...' : 'Create FAQ'}
+                        {submitting ? 'Skapande...' : 'Skapa FAQ'}
                       </button>
                       <button
                         type="button"
@@ -271,7 +270,7 @@ export default function AdminFAQs() {
                         }}
                         className="flex-1 bg-gray-100 text-gray-700 py-3 rounded-lg font-medium hover:bg-gray-200 transition-colors"
                       >
-                        Cancel
+                        Avboka
                       </button>
                     </div>
                   </form>
@@ -307,11 +306,13 @@ export default function AdminFAQs() {
                   </div>
                   
                   <h2 className="text-2xl font-semibold text-center mb-2">
-                    Delete FAQ
+                  Ta bort FAQ
                   </h2>
                   
                   <p className="text-gray-600 text-center mb-6">
-                    Are you sure you want to delete the FAQ <span className="font-semibold text-gray-900">"{faqToDelete.question}"</span>? This action cannot be undone.
+                  Är du säker på att du vill ta bort FAQ:n
+ <span className="font-semibold text-gray-900">"{faqToDelete.question}"</span>? Den här åtgärden kan inte ångras.
+
                   </p>
 
                   <div className="flex gap-4">
@@ -332,12 +333,12 @@ export default function AdminFAQs() {
                       {deleting ? (
                         <>
                           <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                          Deleting...
+                          Tar bort...
                         </>
                       ) : (
                         <>
                           <Trash2 size={18} />
-                          Delete
+                          Radera
                         </>
                       )}
                     </button>

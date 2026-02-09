@@ -29,7 +29,7 @@ const AboutSection = () => {
           className="flex-shrink-0 text-center md:text-left"
         >
           <h2 className="text-[36px] md:text-[48px] font-medium text-black mb-6 md:mb-8">
-            About
+          Om
           </h2>
 
           <motion.button
@@ -38,7 +38,7 @@ const AboutSection = () => {
             transition={{ duration: 0.25 }}
             className="mx-auto md:mx-0 flex items-center gap-3 bg-[#e8e2d6] px-6 py-3 rounded-full text-[15px] text-black"
           >
-            More about me
+Mer om mig
             <span className="w-8 h-8 rounded-full bg-white flex items-center justify-center">
               <ArrowUpRight size={16} />
             </span>
@@ -59,10 +59,7 @@ const AboutSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            I am a visual artist with over ten years of experience in painting
-            and visual communication. In my work, I combine delicate
-            brushstrokes with minimalist compositions to create emotional
-            visual stories.
+           Jag är en bildkonstnär med över tio års erfarenhet av måleri och visuell kommunikation. I mitt arbete kombinerar jag fina penseldrag med minimalistiska kompositioner för att skapa känslosamma visuella berättelser.
           </motion.p>
 
           <motion.p
@@ -70,10 +67,8 @@ const AboutSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.35 }}
           >
-            I collaborate with galleries and private collectors and participate
-            in exhibitions both at home and abroad. My approach combines
-            traditional techniques with modern methods, giving each work a
-            unique depth and precision.
+  Jag samarbetar med gallerier och privata samlare och deltar i utställningar både hemma och utomlands. Mitt tillvägagångssätt kombinerar traditionella tekniker med moderna metoder, vilket ger varje verk ett unikt djup och precision.
+
           </motion.p>
 
           {/* SIGNATURE */}

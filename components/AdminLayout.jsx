@@ -82,7 +82,7 @@ export default function AdminLayout({ children }) {
     <div className="min-h-screen bg-[#f7f5ef]">
       {/* Mobile Header */}
       <div className="md:hidden bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between">
-        <h1 className="text-xl font-semibold">Admin Panel</h1>
+        <h1 className="text-xl font-semibold">Adminpanel</h1>
         <button
           onClick={() => setSidebarOpen(!sidebarOpen)}
           className="p-2 hover:bg-gray-100 rounded-lg"
@@ -104,8 +104,8 @@ export default function AdminLayout({ children }) {
           >
               <div className="h-full flex flex-col">
                 <div className="p-6 border-b border-gray-200">
-                  <h2 className="text-2xl font-semibold">Admin Panel</h2>
-                  <p className="text-sm text-gray-600 mt-1">Art Gallery Management</p>
+                  <h2 className="text-2xl font-semibold">Adminpanel</h2>
+                  <p className="text-sm text-gray-600 mt-1">Konsthallsledning</p>
                 </div>
 
                 <nav className="flex-1 p-4 space-y-2">
@@ -137,7 +137,7 @@ export default function AdminLayout({ children }) {
                     className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors disabled:opacity-60"
                   >
                     <LogOut size={20} />
-                    <span>{loggingOut ? 'Logging out...' : 'Logout'}</span>
+                    <span>{loggingOut ? 'Loggar ut...' : 'Utloggning'}</span>
                   </button>
                 </div>
               </div>
@@ -186,11 +186,11 @@ export default function AdminLayout({ children }) {
                   </div>
                   
                   <h2 className="text-2xl font-semibold text-center mb-2">
-                    Confirm Logout
+                  Bekräfta utloggning
                   </h2>
                   
                   <p className="text-gray-600 text-center mb-6">
-                    Are you sure you want to logout? You'll need to login again to access the admin panel.
+                  Är du säker på att du vill logga ut? Du måste logga in igen för att komma åt administratörspanelen.
                   </p>
 
                   <div className="flex gap-4">
@@ -200,7 +200,7 @@ export default function AdminLayout({ children }) {
                       disabled={loggingOut}
                       className="flex-1 bg-gray-100 text-gray-700 py-3 rounded-lg font-medium hover:bg-gray-200 transition-colors disabled:opacity-60"
                     >
-                      Cancel
+                      Avboka
                     </button>
                     <button
                       type="button"
@@ -211,12 +211,12 @@ export default function AdminLayout({ children }) {
                       {loggingOut ? (
                         <>
                           <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                          Logging out...
+                          Loggar ut...
                         </>
                       ) : (
                         <>
                           <LogOut size={18} />
-                          Logout
+                          Utloggning
                         </>
                       )}
                     </button>

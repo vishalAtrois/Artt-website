@@ -21,7 +21,7 @@ export default function BrowsePaintingsHeader() {
         transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
         className="text-4xl md:text-5xl font-normal text-black tracking-tight"
       >
-        Browse All Paintings
+Bläddra bland alla målningar
       </motion.h1>
     </section>
   );

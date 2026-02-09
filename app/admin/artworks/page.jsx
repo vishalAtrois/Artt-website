@@ -64,7 +64,7 @@ export default function AdminArtworks() {
     const normalized = Array.isArray(list) ? list.map(normalizeProduct) : [];
     setArtworks(normalized);
     if (!res?.success && normalized.length === 0 && res?.message) {
-      toast.error(res.message || 'Failed to load artworks');
+      toast.error(res.message || 'Misslyckades med att ladda konstverk');
     }
   };
 
@@ -80,7 +80,7 @@ export default function AdminArtworks() {
           const uploadRes = await uploadImageApi(token, file);
           imageUrl = uploadRes?.data?.image ?? uploadRes?.data?.url ?? uploadRes?.data?.imageUrl ?? uploadRes?.url ?? '';
           if (!imageUrl) {
-            toast.error(uploadRes?.message || 'Image upload failed');
+            toast.error(uploadRes?.message || 'Det gick inte att ladda upp bilden');
             setSubmitting(false);
             return;
           }
@@ -90,31 +90,31 @@ export default function AdminArtworks() {
           description: formData.description,
           category: formData.category,
           price: formData.price || '0',
-          inStock: formData.forSale ? 'yes' : 'no',
+          inStock: formData.forSale ? 'ja' : 'inga',
           image: imageUrl,
           year: formData.year || '',
         });
         if (res?.success) {
-          toast.success('Artwork updated successfully');
+          toast.success('Konstverket har uppdaterats');
           setShowModal(false);
           resetForm();
           loadArtworks();
         } else {
-          toast.error(res?.message || 'Failed to update artwork');
+          toast.error(res?.message || 'Misslyckades med att uppdatera bilden');
         }
         return;
       }
 
       const file = imageFile || imageInputRef.current?.files?.[0];
       if (!file) {
-        toast.error('Please select an image');
+        toast.error('Välj en bild');
         setSubmitting(false);
         return;
       }
       const uploadRes = await uploadImageApi(token, file);
       const imageUrl = uploadRes?.data?.image ?? uploadRes?.data?.url ?? uploadRes?.data?.imageUrl ?? uploadRes?.url ?? '';
       if (!imageUrl) {
-        toast.error(uploadRes?.message || 'Image upload failed – no URL in response');
+        toast.error(uploadRes?.message || 'Bilduppladdning misslyckades – ingen URL i svar');
         setSubmitting(false);
         return;
       }
@@ -123,21 +123,21 @@ export default function AdminArtworks() {
         description: formData.description,
         category: formData.category,
         price: formData.price || '0',
-        inStock: formData.forSale ? 'yes' : 'no',
+        inStock: formData.forSale ? 'ja' : 'inga',
         image: imageUrl,
         year: formData.year || '',
       });
       if (res?.success) {
-        toast.success('Artwork added successfully');
+        toast.success('Konstverk har lagts till');
         setShowModal(false);
         resetForm();
         loadArtworks();
       } else {
-        toast.error(res?.message || 'Failed to add artwork');
+        toast.error(res?.message || 'Misslyckades med att lägga till bildmaterial');
       }
     } catch (err) {
       console.error(err);
-      toast.error('Something went wrong');
+      toast.error('Något gick fel');
     } finally {
       setSubmitting(false);
     }
@@ -174,16 +174,16 @@ export default function AdminArtworks() {
     try {
       const res = await deleteProductApi(token, artworkToDelete.id);
       if (res?.success) {
-        toast.success('Artwork deleted successfully');
+        toast.success('Konstverket har raderats');
         setShowDeleteModal(false);
         setArtworkToDelete(null);
         loadArtworks();
       } else {
-        toast.error(res?.message || 'Failed to delete artwork');
+        toast.error(res?.message || 'Misslyckades med att ta bort bilden');
       }
     } catch (err) {
       console.error(err);
-      toast.error('Something went wrong');
+      toast.error('Något gick fel');
     } finally {
       setDeleting(false);
     }
@@ -229,8 +229,8 @@ export default function AdminArtworks() {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-semibold mb-2">Artworks</h1>
-            <p className="text-gray-600">Manage your art collection</p>
+            <h1 className="text-3xl font-semibold mb-2">Konstverk</h1>
+            <p className="text-gray-600">Hantera din konstsamling</p>
           </div>
           <button
             onClick={() => {
@@ -240,23 +240,23 @@ export default function AdminArtworks() {
             className="flex items-center gap-2 bg-[#4b463f] text-white px-4 py-2 rounded-lg hover:bg-black transition-colors"
           >
             <Plus size={20} />
-            Add Artwork
+            Lägg till konstverk
           </button>
         </div>
 
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
           {loading ? (
-            <div className="p-12 text-center text-gray-500">Loading artworks...</div>
+            <div className="p-12 text-center text-gray-500">Laddar konstverk...</div>
           ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-gray-50 border-b border-gray-200">
                 <tr>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Image</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Title</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Category</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">For Sale</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Actions</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Bild</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Titel</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Kategori</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Till salu</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Åtgärder</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
@@ -294,7 +294,7 @@ export default function AdminArtworks() {
                       <span className={`px-2 py-1 rounded text-sm ${
                         artwork.forSale ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
                       }`}>
-                        {artwork.forSale ? 'Yes' : 'No'}
+                        {artwork.forSale ? 'Ja' : 'Inga'}
                       </span>
                     </td>
                     <td className="px-6 py-4">
@@ -353,7 +353,7 @@ export default function AdminArtworks() {
                   className="bg-white rounded-2xl p-6 md:p-8 w-full max-w-2xl max-h-[90vh] overflow-y-auto"
                 >
                   <h2 className="text-2xl font-semibold mb-6">
-                    {editingArtwork ? 'Edit Artwork' : 'Add New Artwork'}
+                    {editingArtwork ? 'Redigera konstverk' : 'Lägg till nytt konstverk'}
                   </h2>
 
                   <form onSubmit={handleSubmit} className="space-y-4">
@@ -372,7 +372,7 @@ export default function AdminArtworks() {
 
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Category *
+                      Kategori *
                       </label>
                       <select
                         value={formData.category}
@@ -380,7 +380,7 @@ export default function AdminArtworks() {
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent outline-none"
                         required
                       >
-                        <option value="">Select category</option>
+                        <option value="">Välj kategori</option>
                         {uniqueCategories.map((cat) => (
                           <option key={cat} value={cat}>{cat}</option>
                         ))}
@@ -389,7 +389,7 @@ export default function AdminArtworks() {
 
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Image *
+                      Bild *
                       </label>
                       
                       {imagePreview ? (
@@ -464,7 +464,8 @@ export default function AdminArtworks() {
                               {isDragging ? 'Drop image here' : 'Click to upload or drag and drop'}
                             </p>
                             <p className="text-xs text-gray-500">
-                              PNG, JPG, GIF up to 10MB
+                            PNG, JPG, GIF upp till 10 MB
+
                             </p>
                           </div>
                         </div>
@@ -473,7 +474,7 @@ export default function AdminArtworks() {
 
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Description *
+                      Beskrivning *
                       </label>
                       <textarea
                         value={formData.description}
@@ -487,7 +488,7 @@ export default function AdminArtworks() {
                     <div className="grid grid-cols-3 gap-4">
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Price
+                        Pris
                         </label>
                         <input
                           type="text"
@@ -500,7 +501,7 @@ export default function AdminArtworks() {
 
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Year
+                        År
                         </label>
                         <input
                           type="text"
@@ -513,15 +514,15 @@ export default function AdminArtworks() {
 
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                          In Stock
+                        I lager
                         </label>
                         <select
                           value={formData.forSale ? 'true' : 'false'}
                           onChange={(e) => setFormData({ ...formData, forSale: e.target.value === 'true' })}
                           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent outline-none"
                         >
-                          <option value="true">Yes</option>
-                          <option value="false">No</option>
+                          <option value="true">Ja</option>
+                          <option value="false">Inga</option>
                         </select>
                       </div>
                     </div>
@@ -532,7 +533,7 @@ export default function AdminArtworks() {
                         disabled={submitting}
                         className="flex-1 bg-[#4b463f] text-white py-3 rounded-lg font-medium hover:bg-black transition-colors disabled:opacity-60"
                       >
-                        {submitting ? (editingArtwork ? 'Updating...' : 'Creating...') : (editingArtwork ? 'Update' : 'Create')}
+                        {submitting ? (editingArtwork ? 'Uppdaterar...' : 'Skapande...') : (editingArtwork ? 'Uppdatera' : 'Skapa')}
                       </button>
                       <button
                         type="button"
@@ -542,7 +543,7 @@ export default function AdminArtworks() {
                         }}
                         className="flex-1 bg-gray-100 text-gray-700 py-3 rounded-lg font-medium hover:bg-gray-200 transition-colors"
                       >
-                        Cancel
+                        Avboka
                       </button>
                     </div>
                   </form>
@@ -578,11 +579,12 @@ export default function AdminArtworks() {
                   </div>
                   
                   <h2 className="text-2xl font-semibold text-center mb-2">
-                    Delete Artwork
+                  Ta bort konstverk
                   </h2>
                   
                   <p className="text-gray-600 text-center mb-6">
-                    Are you sure you want to delete <span className="font-semibold text-gray-900">"{artworkToDelete.title}"</span>? This action cannot be undone.
+                  Är du säker på att du vill radera<span className="font-semibold text-gray-900">"{artworkToDelete.title}"</span>? Den här åtgärden kan inte ångras.
+
                   </p>
 
                   <div className="flex gap-4">
@@ -592,7 +594,7 @@ export default function AdminArtworks() {
                       disabled={deleting}
                       className="flex-1 bg-gray-100 text-gray-700 py-3 rounded-lg font-medium hover:bg-gray-200 transition-colors disabled:opacity-60"
                     >
-                      Cancel
+                      Avboka
                     </button>
                     <button
                       type="button"
@@ -603,12 +605,12 @@ export default function AdminArtworks() {
                       {deleting ? (
                         <>
                           <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                          Deleting...
+                          Tar bort...
                         </>
                       ) : (
                         <>
                           <Trash2 size={18} />
-                          Delete
+                          Radera
                         </>
                       )}
                     </button>

@@ -41,7 +41,7 @@ export default function StartConversation() {
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="text-center text-4xl md:text-5xl font-normal text-black mb-4"
       >
-        Start the Conversation
+Starta konversationen
       </motion.h2>
 
       <motion.p
@@ -51,8 +51,8 @@ export default function StartConversation() {
         transition={{ duration: 0.5, delay: 0.1 }}
         className="text-center text-gray-600 max-w-xl mx-auto mb-20"
       >
-        Interested in a painting? Have a question? Just fill out the form or
-        contact me via{" "}
+      Intresserad av en målning? Har du en fråga? Fyll bara i formuläret eller kontakta mig via
+{" "}
         <span className="underline">example@example.com</span>
       </motion.p>
 
@@ -110,7 +110,7 @@ export default function StartConversation() {
               viewport={{ once: false }}
               transition={{ delay: 0.1 }}
             >
-              <label className="text-sm text-black block mb-2">Name</label>
+              <label className="text-sm text-black block mb-2">Namn</label>
               <input
                 type="text"
                 placeholder="Jane Smith"
@@ -127,7 +127,7 @@ export default function StartConversation() {
               viewport={{ once: false }}
               transition={{ delay: 0.15 }}
             >
-              <label className="text-sm text-black block mb-2">Email</label>
+              <label className="text-sm text-black block mb-2">E-post</label>
               <input
                 type="email"
                 placeholder="example@example.com"
@@ -146,7 +146,7 @@ export default function StartConversation() {
             transition={{ delay: 0.2 }}
           >
             <label className="text-sm text-black block mb-2">
-              Painting <span className="text-gray-400">(optional)</span>
+            Målning <span className="text-gray-400">(frivillig)</span>
             </label>
             <input
               type="text"
@@ -163,10 +163,10 @@ export default function StartConversation() {
             viewport={{ once: false }}
             transition={{ delay: 0.25 }}
           >
-            <label className="text-sm text-black block mb-2">Subject</label>
+            <label className="text-sm text-black block mb-2">Ämne</label>
             <input
               type="text"
-              placeholder="Painting Order"
+              placeholder="Måleribeställning"
               value={formData.subject}
               onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
               className="w-full rounded-md border border-gray-200 px-4 py-3 text-sm outline-none focus:ring-1 focus:ring-black"
@@ -179,10 +179,10 @@ export default function StartConversation() {
             viewport={{ once: false }}
             transition={{ delay: 0.3 }}
           >
-            <label className="text-sm text-black block mb-2">Message</label>
+            <label className="text-sm text-black block mb-2">Meddelande</label>
             <textarea
               rows="4"
-              placeholder='I would like to purchase the "Time Would not Wait" painting...'
+              placeholder='Jag skulle vilja köpa målningen "Tiden väntade inte"...'
               value={formData.message}
               onChange={(e) => setFormData({ ...formData, message: e.target.value })}
               className="w-full rounded-md border border-gray-200 px-4 py-3 text-sm outline-none focus:ring-1 focus:ring-black resize-none"
@@ -196,7 +196,7 @@ export default function StartConversation() {
               animate={{ opacity: 1 }}
               className="p-3 bg-green-100 text-green-800 rounded-lg text-sm text-center"
             >
-              Message sent successfully!
+Meddelandet har skickats!
             </motion.div>
           )}
           <motion.button
@@ -205,7 +205,7 @@ export default function StartConversation() {
             type="submit"
             className="w-full bg-[#4b463f] text-white py-4 rounded-full flex items-center justify-center gap-3 hover:bg-black transition"
           >
-            Send message
+Skicka meddelande
 
             <span className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
               <ArrowRight className="w-5 h-5 text-black stroke-[3]" />

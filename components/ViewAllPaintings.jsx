@@ -27,7 +27,7 @@ const ViewAllPaintings = () => {
           className="text-center md:text-left mb-6 md:mb-0"
         >
           <h2 className="text-[28px] sm:text-[36px] md:text-[48px] font-medium text-black leading-tight">
-            View All <br /> Paintings
+          Visa alla <br /> Målningar
           </h2>
         </motion.div>
 

@@ -63,22 +63,22 @@ const Footer = () => {
             <ul className="space-y-2 sm:space-y-4 text-sm text-gray-700">
               <li>
                 <motion.div whileHover={{ x: 4 }} transition={{ duration: 0.2 }}>
-                  <Link href="/">Homepage</Link>
+                  <Link href="/">Hemsida</Link>
                 </motion.div>
               </li>
               <li>
                 <motion.div whileHover={{ x: 4 }} transition={{ duration: 0.2 }}>
-                  <Link href="/Paintings">Paintings</Link>
+                  <Link href="/Paintings">Målningar</Link>
                 </motion.div>
               </li>
               <li>
                 <motion.div whileHover={{ x: 4 }} transition={{ duration: 0.2 }}>
-                  <Link href="/About">About</Link>
+                  <Link href="/About">Om</Link>
                 </motion.div>
               </li>
               <li>
                 <motion.div whileHover={{ x: 4 }} transition={{ duration: 0.2 }}>
-                  <Link href="/Contact">Contact</Link>
+                  <Link href="/Contact">Kontakta</Link>
                 </motion.div>
               </li>
             </ul>
@@ -94,7 +94,7 @@ const Footer = () => {
             className="text-center md:text-left mt-8 md:mt-0"
           >
             <h4 className="text-sm font-medium mb-4 sm:mb-6">
-              Paintings for sale
+            Tavlor till salu
             </h4>
             <ul className="space-y-2 sm:space-y-4 text-sm text-gray-700">
               <li>Obsidian Tide</li>

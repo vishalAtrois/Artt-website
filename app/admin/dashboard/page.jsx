@@ -76,8 +76,8 @@ export default function AdminDashboard() {
     <AdminLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-semibold mb-2">Dashboard</h1>
-          <p className="text-gray-600">Overview of your art gallery</p>
+          <h1 className="text-3xl font-semibold mb-2">Instrumentpanel</h1>
+          <p className="text-gray-600">Översikt över ditt konstgalleri</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -104,28 +104,28 @@ export default function AdminDashboard() {
         </div>
 
         <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-          <h2 className="text-xl font-semibold mb-4">Quick Actions</h2>
+          <h2 className="text-xl font-semibold mb-4">Snabba åtgärder</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <a
               href="/admin/artworks?action=add"
               className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
             >
-              <h3 className="font-medium mb-1">Add New Artwork</h3>
-              <p className="text-sm text-gray-600">Upload a new painting</p>
+              <h3 className="font-medium mb-1">Lägg till nytt konstverk</h3>
+              <p className="text-sm text-gray-600">Ladda upp en ny målning</p>
             </a>
             <a
               href="/admin/contacts"
               className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
             >
-              <h3 className="font-medium mb-1">View Messages</h3>
-              <p className="text-sm text-gray-600">Check contact submissions</p>
+              <h3 className="font-medium mb-1">Visa meddelanden</h3>
+              <p className="text-sm text-gray-600">Kontrollera kontaktuppgifter</p>
             </a>
             <a
               href="/admin/categories"
               className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
             >
-              <h3 className="font-medium mb-1">Manage Categories</h3>
-              <p className="text-sm text-gray-600">Add or edit categories</p>
+              <h3 className="font-medium mb-1">Hantera kategorier</h3>
+              <p className="text-sm text-gray-600">Lägg till eller redigera kategorier</p>
             </a>
           </div>
         </div>

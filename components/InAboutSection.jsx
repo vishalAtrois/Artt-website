@@ -15,7 +15,7 @@ export default function InAboutSection() {
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="text-center text-2xl sm:text-3xl md:text-4xl font-normal text-black mb-12 sm:mb-16 md:mb-20"
       >
-        About
+        Om
       </motion.h2>
 
       {/* right floating dot */}
@@ -71,7 +71,7 @@ export default function InAboutSection() {
             transition={{ duration: 0.5 }}
             className="text-2xl sm:text-3xl md:text-4xl font-normal text-black mb-4 sm:mb-6"
           >
-            Art is my passion
+Konst är min passion
           </motion.h3>
 
           <motion.p
@@ -81,9 +81,8 @@ export default function InAboutSection() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-gray-600 leading-relaxed mb-4 sm:mb-6"
           >
-            I channel over a decade of artistic exploration into each composition,
-            blending expressive brushwork with harmonious palettes. My work invites
-            viewers to pause and engage with subtle nuances of light and form.
+         Jag kanaliserar över ett decennium av konstnärlig utforskning i varje komposition, och blandar uttrycksfulla penseldrag med harmoniska paletter. Mina verk inbjuder betraktaren att stanna upp och engagera sig i subtila nyanser av ljus och form.
+
           </motion.p>
 
           <motion.p
@@ -93,10 +92,8 @@ export default function InAboutSection() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-gray-600 leading-relaxed mb-4 sm:mb-6"
           >
-            Exhibited across Europe—in both intimate galleries and large-scale art
-            fairs—I strive to connect spaces with meaningful visual narratives.
-            Whether through bold abstracts or delicate studies, every painting
-            reflects my commitment to craftsmanship and storytelling.
+           Jag ställs ut över hela Europa – både i intima gallerier och storskaliga konst mässor – och strävar efter att koppla samman rum med meningsfulla visuella berättelser. Vare sig det är genom djärva abstrakta verk eller fina studier, återspeglar varje målning mitt engagemang för hantverk och historieberättande.
+
           </motion.p>
 
           <motion.p
@@ -106,7 +103,7 @@ export default function InAboutSection() {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="text-gray-600 leading-relaxed mb-6 sm:mb-10"
           >
-            Join me in discovering how art can transform a room and uplift the spirit.
+Följ med mig och upptäck hur konst kan förvandla ett rum och lyfta stämningen.
           </motion.p>
 
           {/* Signature */}

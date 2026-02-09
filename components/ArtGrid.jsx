@@ -51,9 +51,9 @@ const ArtGrid = () => {
   return (
     <section className="bg-[#f7f5ef] px-4 sm:px-6 md:px-[50px] py-10">
       {loading ? (
-        <div className="text-center py-12 text-gray-500">Loading artworks...</div>
+        <div className="text-center py-12 text-gray-500">Laddar konstverk...</div>
       ) : artworks.length === 0 ? (
-        <div className="text-center py-12 text-gray-500">No artworks available.</div>
+        <div className="text-center py-12 text-gray-500">Inga konstverk är tillgängliga.</div>
       ) : (
         <motion.div
           variants={container}

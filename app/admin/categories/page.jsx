@@ -29,7 +29,7 @@ export default function AdminCategories() {
   };
 
   const handleDelete = (category) => {
-    if (confirm(`Are you sure you want to delete "${category}"? This will not remove it from existing artworks.`)) {
+    if (confirm(`Är du säker på att du vill radera"${category}"? Detta kommer inte att ta bort det från befintliga konstverk.`)) {
       AdminStorage.deleteCategory(category);
       loadCategories();
     }
@@ -39,8 +39,8 @@ export default function AdminCategories() {
     <AdminLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-semibold mb-2">Categories</h1>
-          <p className="text-gray-600">Manage artwork categories</p>
+          <h1 className="text-3xl font-semibold mb-2">Kategorier</h1>
+          <p className="text-gray-600">Hantera konstkategorier</p>
         </div>
 
         <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
@@ -57,14 +57,14 @@ export default function AdminCategories() {
               className="flex items-center gap-2 bg-[#4b463f] text-white px-6 py-2 rounded-lg hover:bg-black transition-colors"
             >
               <Plus size={20} />
-              Add Category
+              Lägg till kategori
             </button>
           </form>
 
           {categories.length === 0 ? (
             <div className="text-center py-12">
               <Tag className="mx-auto text-gray-400 mb-4" size={48} />
-              <p className="text-gray-600">No categories yet</p>
+              <p className="text-gray-600">Inga kategorier än</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

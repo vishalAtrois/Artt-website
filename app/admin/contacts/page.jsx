@@ -31,7 +31,7 @@ export default function AdminContacts() {
   };
 
   const handleDelete = (id) => {
-    if (confirm('Are you sure you want to delete this contact submission?')) {
+    if (confirm('Är du säker på att du vill ta bort den här kontaktinskickningen?')) {
       AdminStorage.deleteContact(id);
       loadContacts();
     }
@@ -44,13 +44,13 @@ export default function AdminContacts() {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-semibold mb-2">Contact Submissions</h1>
-            <p className="text-gray-600">Manage messages from visitors</p>
+            <h1 className="text-3xl font-semibold mb-2">Kontakta Submissions</h1>
+            <p className="text-gray-600">Hantera meddelanden från besökare</p>
           </div>
           <div className="flex items-center gap-4">
             {unreadCount > 0 && (
               <span className="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm font-medium">
-                {unreadCount} unread
+                {unreadCount} oläst
               </span>
             )}
             <select
@@ -58,9 +58,9 @@ export default function AdminContacts() {
               onChange={(e) => setFilter(e.target.value)}
               className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent outline-none"
             >
-              <option value="all">All Messages</option>
-              <option value="unread">Unread Only</option>
-              <option value="read">Read Only</option>
+              <option value="all">Alla meddelanden</option>
+              <option value="unread">Endast oläst</option>
+              <option value="read">Endast läs</option>
             </select>
           </div>
         </div>
@@ -68,7 +68,7 @@ export default function AdminContacts() {
         {filteredContacts.length === 0 ? (
           <div className="bg-white rounded-xl p-12 text-center border border-gray-200">
             <Mail className="mx-auto text-gray-400 mb-4" size={48} />
-            <p className="text-gray-600">No contact submissions found</p>
+            <p className="text-gray-600">Inga kontaktuppgifter hittades</p>
           </div>
         ) : (
           <div className="space-y-4">
@@ -88,7 +88,7 @@ export default function AdminContacts() {
                       <h3 className="text-lg font-semibold">{contact.name}</h3>
                       {!contact.read && (
                         <span className="px-2 py-1 bg-orange-500 text-white rounded text-xs font-medium">
-                          New
+                          Ny
                         </span>
                       )}
                     </div>
@@ -102,7 +102,7 @@ export default function AdminContacts() {
                       <button
                         onClick={() => handleMarkRead(contact.id, true)}
                         className="p-2 hover:bg-green-100 rounded-lg transition-colors"
-                        title="Mark as read"
+                        title="Markera som läst"
                       >
                         <Check size={18} className="text-green-600" />
                       </button>
@@ -110,7 +110,7 @@ export default function AdminContacts() {
                       <button
                         onClick={() => handleMarkRead(contact.id, false)}
                         className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                        title="Mark as unread"
+                        title="Markera som oläst"
                       >
                         <X size={18} className="text-gray-600" />
                       </button>
@@ -118,7 +118,7 @@ export default function AdminContacts() {
                     <button
                       onClick={() => handleDelete(contact.id)}
                       className="p-2 hover:bg-red-100 rounded-lg transition-colors"
-                      title="Delete"
+                      title="Radera"
                     >
                       <Trash2 size={18} className="text-red-600" />
                     </button>
@@ -127,14 +127,14 @@ export default function AdminContacts() {
 
                 {contact.painting && (
                   <div className="mb-3">
-                    <span className="text-sm text-gray-600">Painting: </span>
+                    <span className="text-sm text-gray-600">Målning: </span>
                     <span className="text-sm font-medium">{contact.painting}</span>
                   </div>
                 )}
 
                 {contact.subject && (
                   <div className="mb-3">
-                    <span className="text-sm text-gray-600">Subject: </span>
+                    <span className="text-sm text-gray-600">Ämne: </span>
                     <span className="text-sm font-medium">{contact.subject}</span>
                   </div>
                 )}

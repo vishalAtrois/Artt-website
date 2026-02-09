@@ -25,7 +25,7 @@ const ArtCard = ({ art }) => {
             className="absolute top-4 right-6 z-10 bg-white/80 backdrop-blur-sm text-[14px] py-1.5 px-4 rounded-full shadow-sm"
           >
             <span className="text-gray-500 mr-1">$</span>
-            <span className="text-black">For sale</span>
+            <span className="text-black">Till salu</span>
           </motion.div>
         )}
 
@@ -81,7 +81,7 @@ const ArtCard = ({ art }) => {
                 transition-all duration-500
               "
             >
-              See details
+Se detaljer
             </span>
 
             <ArrowRight

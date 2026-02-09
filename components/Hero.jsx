@@ -96,9 +96,9 @@ const Hero = () => {
           transition={{ duration: 0.6, delay: 0.7 }}
           className="mt-4 sm:mt-6 max-w-[320px] sm:max-w-[440px] md:max-w-[520px] text-[14px] sm:text-[15px] text-black/70 leading-relaxed"
         >
-          Exotic animals, vivid landscapes and abstract art,  <br />
-          to make your personal area
-into a colorful and living space.        </motion.p>
+          Exotiska djur, livfulla landskap och abstrakt konst,<br />
+          för att förvandla ditt personliga område till ett färgglatt och levande utrymme.
+       </motion.p>
       </div>
 
     </section>

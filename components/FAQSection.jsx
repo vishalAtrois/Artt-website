@@ -45,7 +45,7 @@ const FAQSection = () => {
           transition={smoothTransition}
           className="text-[36px] md:text-[48px] font-medium leading-tight mb-12 text-[#1a1a1a]"
         >
-          Not sure about <br /> something?
+          Inte säker på <br /> något?
         </motion.h2>
 
         <div className="flex flex-col lg:flex-row items-stretch gap-12 lg:gap-24">
@@ -91,9 +91,9 @@ const FAQSection = () => {
           {/* Right Side: FAQ Accordion */}
           <div className="lg:w-2/3 space-y-4">
             {loading ? (
-              <div className="text-center py-8 text-gray-500">Loading FAQs...</div>
+              <div className="text-center py-8 text-gray-500">Belastning FAQs...</div>
             ) : faqs.length === 0 ? (
-              <div className="text-center py-8 text-gray-500">No FAQs available.</div>
+              <div className="text-center py-8 text-gray-500">Inga FAQs tillgänglig.</div>
             ) : (
               faqs
                 .sort((a, b) => (a.order || 0) - (b.order || 0))
