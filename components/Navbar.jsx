@@ -35,7 +35,7 @@ const Navbar = () => {
         }}
         className="hidden md:flex gap-[40px]"
       >
-        {["Homepage", "Paintings", "About", "Contact"].map((item, i) => (
+        {["Hemsida", "Målningar", "Om", "Kontakta"].map((item, i) => (
           <motion.li
             key={item}
             variants={{
