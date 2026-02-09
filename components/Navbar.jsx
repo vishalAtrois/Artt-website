@@ -123,7 +123,7 @@ const Navbar = () => {
               }}
               className="flex flex-col items-center gap-6 py-6"
             >
-              {["Homepage", "Paintings", "About", "Contact"].map((item) => (
+              {["Hemsida", "Målningar", "Om", "Kontakta"].map((item) => (
                 <motion.div
                   key={item}
                   variants={{
