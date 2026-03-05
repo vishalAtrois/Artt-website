@@ -6,12 +6,19 @@ import { FaTiktok, FaXTwitter, FaInstagram } from "react-icons/fa6";
 import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
 import { motion, AnimatePresence } from "framer-motion";
 
+// Configure navbar items here with any label + route you want
+const navItems = [
+  { label: "Hemsida", href: "/" },
+  { label: "Målningar", href: "/Paintings" },
+  { label: "Om", href: "/About" },
+  { label: "Kontakta", href: "/Contact" },
+];
+
 const Navbar = () => {
   const [open, setOpen] = useState(false);
 
   return (
     <nav className="h-[90px] bg-[#f7f5ef] flex items-center justify-between px-[20px] md:px-[80px] relative z-50">
-      
       {/* Left */}
       <motion.div
         initial={{ opacity: 0, x: -20 }}
@@ -20,9 +27,7 @@ const Navbar = () => {
         className="flex items-center gap-2"
       >
         <span className="w-[10px] h-[10px] rounded-full bg-white" />
-        <span className="text-[16px] font-medium text-black">
-        AlfJssonart
-        </span>
+        <span className="text-[16px] font-medium text-black">AlfJssonart</span>
       </motion.div>
 
       {/* Desktop Menu */}
@@ -35,9 +40,9 @@ const Navbar = () => {
         }}
         className="hidden md:flex gap-[40px]"
       >
-        {["Hemsida", "Målningar", "Om", "Kontakta"].map((item, i) => (
+        {navItems.map((item) => (
           <motion.li
-            key={item}
+            key={item.label}
             variants={{
               hidden: { opacity: 0, y: -10 },
               show: { opacity: 1, y: 0 },
@@ -45,10 +50,10 @@ const Navbar = () => {
             transition={{ duration: 0.3 }}
           >
             <Link
-              href={item === "Homepage" ? "/" : `/${item}`}
+              href={item.href}
               className="text-[15px] text-black"
             >
-              {item}
+              {item.label}
             </Link>
           </motion.li>
         ))}
@@ -123,20 +128,20 @@ const Navbar = () => {
               }}
               className="flex flex-col items-center gap-6 py-6"
             >
-              {["Hemsida", "Målningar", "Om", "Kontakta"].map((item) => (
+              {navItems.map((item) => (
                 <motion.div
-                  key={item}
+                  key={item.label}
                   variants={{
                     hidden: { opacity: 0, y: -10 },
                     show: { opacity: 1, y: 0 },
                   }}
                 >
                   <Link
-                    href={item === "Homepage" ? "/" : `/${item}`}
+                    href={item.href}
                     onClick={() => setOpen(false)}
                     className="text-[15px] text-black"
                   >
-                    {item}
+                    {item.label}
                   </Link>
                 </motion.div>
               ))}
@@ -155,7 +160,6 @@ const Navbar = () => {
           </motion.div>
         )}
       </AnimatePresence>
-
     </nav>
   );
 };
