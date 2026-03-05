@@ -196,6 +196,11 @@ const translations = {
     "contact.messageLabel": "Meddelande",
     "contact.sent": "Meddelandet har skickats!",
     "contact.sendButton": "Skicka meddelande",
+
+    // Navbar language switcher
+    "language.label": "Språk",
+    "language.sv": "Svenska",
+    "language.en": "Engelska",
   },
   en: {
     "nav.home": "Home",
@@ -375,6 +380,11 @@ const translations = {
     "contact.messageLabel": "Message",
     "contact.sent": "Your message has been sent!",
     "contact.sendButton": "Send message",
+
+    // Navbar language switcher
+    "language.label": "Language",
+    "language.sv": "Swedish",
+    "language.en": "English",
 
     // Admin layout
     "admin.layout.subtitle": "Art gallery management",
