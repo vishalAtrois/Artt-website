@@ -10,37 +10,55 @@ const Hero = () => {
   return (
     <section className="relative bg-[#f7f5ef] py-[80px] sm:py-[100px] md:py-[120px] overflow-hidden">
       {/* ATMOSPHERIC MOUNTAINS BACKGROUND */}
-<div className="absolute inset-0 z-0">
-  <svg
-    viewBox="0 0 1440 500"
-    preserveAspectRatio="none"
-    className="w-full h-full -translate-y-32"
-  >
-    <defs>
-      <linearGradient id="mountainFar" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stopColor="#6f7f73" stopOpacity="0.45" />
-        <stop offset="100%" stopColor="#f7f5ef" stopOpacity="1" />
-      </linearGradient>
+      <div className="absolute inset-0 z-0">
+        <motion.svg
+          viewBox="0 0 1440 500"
+          preserveAspectRatio="none"
+          className="w-full h-full -translate-y-32"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
+        >
+          <defs>
+            <linearGradient id="mountainFar" x1="0" y1="0" x2="0" y2="1">
+              {/* much lighter, softer grey-green */}
+              <stop offset="0%" stopColor="#b8c3b9" stopOpacity="0.35" />
+              <stop offset="100%" stopColor="#f7f5ef" stopOpacity="1" />
+            </linearGradient>
 
-      <linearGradient id="mountainNear" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stopColor="#5f6b63" stopOpacity="0.55" />
-        <stop offset="100%" stopColor="#f7f5ef" stopOpacity="1" />
-      </linearGradient>
-    </defs>
+            <linearGradient id="mountainNear" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#a0aba1" stopOpacity="0.4" />
+              <stop offset="100%" stopColor="#f7f5ef" stopOpacity="1" />
+            </linearGradient>
+          </defs>
 
-    {/* FAR RANGE */}
-    <path
-      d="M0 260 L180 200 L360 220 L560 170 L740 210 L940 160 L1140 200 L1340 180 L1440 200 L1440 500 L0 500 Z"
-      fill="url(#mountainFar)"
-    />
+          {/* FAR RANGE */}
+          <motion.path
+            d="M0 260 L180 200 L360 220 L560 170 L740 210 L940 160 L1140 200 L1340 180 L1440 200 L1440 500 L0 500 Z"
+            fill="url(#mountainFar)"
+            initial={{ y: 0, x: 0 }}
+            animate={{ y: [0, 10, 0], x: [0, -8, 0] }}
+            transition={{
+              duration: 24,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
 
-    {/* NEAR RANGE */}
-    <path
-      d="M0 320 L160 260 L340 280 L560 230 L780 270 L980 220 L1180 260 L1380 240 L1440 260 L1440 500 L0 500 Z"
-      fill="url(#mountainNear)"
-    />
-  </svg>
-</div>
+          {/* NEAR RANGE */}
+          <motion.path
+            d="M0 320 L160 260 L340 280 L560 230 L780 270 L980 220 L1180 260 L1380 240 L1440 260 L1440 500 L0 500 Z"
+            fill="url(#mountainNear)"
+            initial={{ y: 0, x: 0 }}
+            animate={{ y: [0, 18, 0], x: [0, 10, 0] }}
+            transition={{
+              duration: 18,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        </motion.svg>
+      </div>
 
       {/* Background Text */}
       <motion.h1

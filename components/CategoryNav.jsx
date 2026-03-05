@@ -2,14 +2,14 @@
 
 import { motion } from "framer-motion";
 
+// Flowing line text – always displayed in Swedish
 const categories = [
-  "Abstract Expressions",
-  "Compositions",
-  "Animals",
-   "Modern Art",
+  "Abstrakta uttryck",
+  "Kompositioner",
+  "Djurmotiv",
+  "Modern konst",
 ];
 
-// List ko double kar dete hain taaki loop smooth ho
 const doubleCategories = [...categories, ...categories];
 
 const CategoryNav = () => {
@@ -19,7 +19,7 @@ const CategoryNav = () => {
         <motion.div
           className="flex gap-6 sm:gap-8 md:gap-[60px] whitespace-nowrap w-max"
           animate={{
-            x: ["0%", "-50%"], // horizontal scroll effect
+            x: ["0%", "-50%"],
           }}
           transition={{
             ease: "linear",
