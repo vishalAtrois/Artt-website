@@ -66,7 +66,7 @@ export default function AdminArtworks() {
     const normalized = Array.isArray(list) ? list.map(normalizeProduct) : [];
     setArtworks(normalized);
     if (!res?.success && normalized.length === 0 && res?.message) {
-      toast.error(res.message || t('admin.artworks.loadError') ?? 'Misslyckades med att ladda konstverk');
+      toast.error(res.message || t('admin.artworks.loadError') || 'Misslyckades med att ladda konstverk');
     }
   };
 
@@ -82,7 +82,11 @@ export default function AdminArtworks() {
           const uploadRes = await uploadImageApi(token, file);
           imageUrl = uploadRes?.data?.image ?? uploadRes?.data?.url ?? uploadRes?.data?.imageUrl ?? uploadRes?.url ?? '';
           if (!imageUrl) {
-            toast.error(uploadRes?.message || t('admin.artworks.uploadError') ?? 'Det gick inte att ladda upp bilden');
+            toast.error(
+              uploadRes?.message ||
+                (t('admin.artworks.uploadError') ??
+                  'Det gick inte att ladda upp bilden')
+            );
             setSubmitting(false);
             return;
           }
@@ -102,7 +106,7 @@ export default function AdminArtworks() {
           resetForm();
           loadArtworks();
         } else {
-          toast.error(res?.message || t('admin.artworks.updateError') ?? 'Misslyckades med att uppdatera bilden');
+          toast.error(res?.message || t('admin.artworks.updateError') || 'Misslyckades med att uppdatera bilden');
         }
         return;
       }
@@ -181,7 +185,7 @@ export default function AdminArtworks() {
         setArtworkToDelete(null);
         loadArtworks();
       } else {
-        toast.error(res?.message || t('admin.artworks.deleteError') ?? 'Misslyckades med att ta bort bilden');
+        toast.error(res?.message || t('admin.artworks.deleteError') || 'Misslyckades med att ta bort bilden');
       }
     } catch (err) {
       console.error(err);
