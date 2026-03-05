@@ -75,6 +75,7 @@ const translations = {
     // FAQSection
     "faq.notSure": "Inte säker på \nnågot?",
     "faq.none": "Inga FAQs tillgänglig.",
+    "faq.contactMe": "Kontakta mig",
 
     // Admin common / layout / confirmations (kept Swedish)
     "admin.logout.confirmTitle": "Bekräfta utloggning",
@@ -261,6 +262,7 @@ const translations = {
     // FAQSection
     "faq.notSure": "Not sure \nabout something?",
     "faq.none": "No FAQs available.",
+    "faq.contactMe": "Contact me",
 
     // Admin texts (translated to English for convenience)
     "admin.logout.confirmTitle": "Confirm logout",
