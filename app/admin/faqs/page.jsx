@@ -169,9 +169,8 @@ export default function AdminFAQs() {
                             {faq.question || t('admin.faq.noQuestion')}
                           </h3>
                         </div>
-                        <p className="text-gray-600 mt-2 whitespace-pre-wrap">
-                          {faq.answer || t('admin.faq.noAnswer') ?? 'Inget svar'}
-                        </p>
+                       <p className="text-gray-600 mt-2 whitespace-pre-wrap">
+                       {faq.answer || (t('admin.faq.noAnswer') ?? 'Inget svar')}</p>
                       </div>
                       <div className="flex items-center gap-2 ml-4">
                         <button
