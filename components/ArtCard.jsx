@@ -4,9 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { useLanguage } from "./LanguageProvider";
 
 const ArtCard = ({ art }) => {
   const artId = art.id ?? art._id;
+  const { t } = useLanguage();
   return (
     <Link href={`/Paintings/${artId}`} className="block group">
       <motion.div
@@ -25,7 +27,9 @@ const ArtCard = ({ art }) => {
             className="absolute top-4 right-6 z-10 bg-white/80 backdrop-blur-sm text-[14px] py-1.5 px-4 rounded-full shadow-sm"
           >
             <span className="text-gray-500 mr-1">$</span>
-            <span className="text-black">Till salu</span>
+            <span className="text-black">
+              {t("artCard.forSale") ?? "Till salu"}
+            </span>
           </motion.div>
         )}
 
@@ -81,7 +85,7 @@ const ArtCard = ({ art }) => {
                 transition-all duration-500
               "
             >
-Se detaljer
+              {t("artCard.seDetails") ?? "Se detaljer"}
             </span>
 
             <ArrowRight

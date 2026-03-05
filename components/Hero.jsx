@@ -2,8 +2,11 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useLanguage } from "./LanguageProvider";
 
 const Hero = () => {
+  const { t } = useLanguage();
+
   return (
     <section className="relative bg-[#f7f5ef] py-[80px] sm:py-[100px] md:py-[120px] overflow-hidden">
       {/* ATMOSPHERIC MOUNTAINS BACKGROUND */}
@@ -96,8 +99,9 @@ const Hero = () => {
           transition={{ duration: 0.6, delay: 0.7 }}
           className="mt-4 sm:mt-6 max-w-[320px] sm:max-w-[440px] md:max-w-[520px] text-[14px] sm:text-[15px] text-black/70 leading-relaxed"
         >
-          Exotiska djur, livfulla landskap och abstrakt konst,<br />
-          för att förvandla ditt personliga område till ett färgglatt och levande utrymme.
+          {t("hero.subtitle.line1")}
+          <br />
+          {t("hero.subtitle.line2")}
        </motion.p>
       </div>
 

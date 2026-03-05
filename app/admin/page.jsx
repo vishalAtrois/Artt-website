@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { AdminStorage } from '@/lib/adminStorage';
 import { motion } from 'framer-motion';
+import { useLanguage } from '@/components/LanguageProvider';
 
 const LOGIN_API_URL = 'https://art-website-liart.vercel.app/v1/admin/login';
 
@@ -14,6 +15,7 @@ export default function AdminLogin() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const { t } = useLanguage();
 
   useEffect(() => {
     if (AdminStorage.isAuthenticated()) {
@@ -49,14 +51,14 @@ export default function AdminLogin() {
       try {
         parsed = JSON.parse(result);
       } catch {
-        setError('Ogiltigt svar från servern.');
-        toast.error('Ogiltigt svar från servern.');
+        setError(t('admin.login.invalidResponse'));
+        toast.error(t('admin.login.invalidResponse'));
         return;
       }
 
       if (parsed?.success && parsed?.user && parsed?.tokens?.access?.token) {
         AdminStorage.setAuthSession(parsed);
-        toast.success('Inloggad framgångsrikt');
+        toast.success(t('admin.login.success'));
         router.push('/admin/dashboard');
         return;
       }
@@ -66,8 +68,8 @@ export default function AdminLogin() {
       toast.error(errMsg);
     } catch (err) {
       console.error('Login API error:', err);
-      setError('Nätverksfel. Försök igen.');
-      toast.error('Nätverksfel. Försök igen.');
+      setError(t('admin.login.networkError'));
+      toast.error(t('admin.login.networkError'));
     } finally {
       setLoading(false);
     }
@@ -80,13 +82,15 @@ export default function AdminLogin() {
         animate={{ opacity: 1, y: 0 }}
         className="bg-white rounded-2xl p-8 md:p-12 w-full max-w-md shadow-lg"
       >
-        <h1 className="text-3xl font-semibold mb-2 text-center">Admin inloggning</h1>
-        <p className="text-gray-600 text-center mb-8">Öppna adminpanelen</p>
+        <h1 className="text-3xl font-semibold mb-2 text-center">Admin login</h1>
+        <p className="text-gray-600 text-center mb-8">
+          {t('admin.login.openPanel')}
+        </p>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-            E-post
+              {t('admin.login.emailLabel') ?? 'E-post'}
             </label>
             <input
               type="email"
@@ -100,14 +104,14 @@ export default function AdminLogin() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-            Lösenord
+              {t('admin.login.password')}
             </label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent outline-none"
-              placeholder="Ange lösenord"
+              placeholder={t('admin.login.passwordPlaceholder')}
               required
             />
           </div>
@@ -127,12 +131,12 @@ export default function AdminLogin() {
             disabled={loading}
             className="w-full bg-[#4b463f] text-white py-3 rounded-lg font-medium hover:bg-black transition-colors disabled:opacity-60"
           >
-            {loading ? 'inloggning.com...' : 'Inloggning'}
+            {loading ? 'Logging in…' : 'Login'}
           </button>
         </form>
 
         <p className="text-xs text-gray-500 text-center mt-6">
-        Använd din administratörs-e-postadress och ditt lösenord för att logga in.
+          {t('admin.login.helper')}
         </p>
       </motion.div>
     </div>

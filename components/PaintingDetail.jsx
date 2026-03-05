@@ -3,8 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useLanguage } from "./LanguageProvider";
 
 const PaintingDetail = ({ art }) => {
+  const { t } = useLanguage();
+
   return (
     <section className="bg-[#f7f5ef] px-4 sm:px-6 md:px-[80px] py-12 md:py-16 overflow-hidden">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start md:items-center">
@@ -63,9 +66,9 @@ const PaintingDetail = ({ art }) => {
               href="/Paintings"
               className="hover:text-black hover:underline transition cursor-pointer"
             >
-Alla målningar
+              {t("paintingDetail.back")}
             </Link>{" "}
-            &gt; Detalj
+            &gt; {t("paintingDetail.detail") ?? "Detail"}
           </motion.p>
 
           <motion.h1
@@ -86,24 +89,30 @@ Alla målningar
             className="grid grid-cols-1 sm:grid-cols-2 gap-y-6 text-sm mb-8 md:mb-10"
           >
             <div>
-              <p className="text-gray-500">Kategori</p>
+              <p className="text-gray-500">
+                {t("paintingDetail.categoryLabel") ?? "Kategori"}
+              </p>
               <p>{art.category}</p>
             </div>
 
             <div>
-              <p className="text-gray-500">År</p>
+              <p className="text-gray-500">{t("paintingDetail.year")}</p>
               <p>{art.year || 'N/A'}</p>
             </div>
 
             <div className="sm:col-span-2">
-              <p className="text-gray-500 mb-1">Beskrivning</p>
+              <p className="text-gray-500 mb-1">
+                {t("paintingDetail.descriptionLabel") ?? "Beskrivning"}
+              </p>
               <p className="text-gray-700 leading-relaxed">
                 {art.description}
               </p>
             </div>
 
             <div>
-              <p className="text-gray-500">Till salu?</p>
+              <p className="text-gray-500">
+                {t("paintingDetail.forSaleLabel") ?? "Till salu?"}
+              </p>
               <p>{art.forSale ? "Yes" : "No"}</p>
             </div>
 
@@ -121,7 +130,7 @@ Alla målningar
               whileTap={{ scale: 0.96 }}
               className="w-full sm:w-auto bg-[#2a2926] text-white px-8 py-4 rounded-full flex items-center justify-center gap-3"
             >
-            Få tavlan →
+              {t("paintingDetail.cta")}
             </motion.button>
           )}
         </motion.div>

@@ -5,10 +5,12 @@ import AdminLayout from '@/components/AdminLayout';
 import { AdminStorage } from '@/lib/adminStorage';
 import { Mail, Trash2, Check, X } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '@/components/LanguageProvider';
 
 export default function AdminContacts() {
   const [contacts, setContacts] = useState([]);
   const [filter, setFilter] = useState('all'); // all, read, unread
+  const { t } = useLanguage();
 
   useEffect(() => {
     loadContacts();
@@ -31,7 +33,7 @@ export default function AdminContacts() {
   };
 
   const handleDelete = (id) => {
-    if (confirm('Är du säker på att du vill ta bort den här kontaktinskickningen?')) {
+    if (confirm(t('admin.contacts.deleteConfirm'))) {
       AdminStorage.deleteContact(id);
       loadContacts();
     }
@@ -44,13 +46,17 @@ export default function AdminContacts() {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-semibold mb-2">Kontakta Submissions</h1>
-            <p className="text-gray-600">Hantera meddelanden från besökare</p>
+            <h1 className="text-3xl font-semibold mb-2">
+              {t('admin.contacts.title')}
+            </h1>
+            <p className="text-gray-600">
+              {t('admin.contacts.subtitle')}
+            </p>
           </div>
           <div className="flex items-center gap-4">
             {unreadCount > 0 && (
               <span className="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm font-medium">
-                {unreadCount} oläst
+                {unreadCount} {t('admin.contacts.unreadCount')}
               </span>
             )}
             <select
@@ -58,9 +64,9 @@ export default function AdminContacts() {
               onChange={(e) => setFilter(e.target.value)}
               className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent outline-none"
             >
-              <option value="all">Alla meddelanden</option>
-              <option value="unread">Endast oläst</option>
-              <option value="read">Endast läs</option>
+              <option value="all">{t('admin.contacts.filterAll') ?? 'Alla meddelanden'}</option>
+              <option value="unread">{t('admin.contacts.filterUnread')}</option>
+              <option value="read">{t('admin.contacts.filterRead')}</option>
             </select>
           </div>
         </div>
@@ -68,7 +74,9 @@ export default function AdminContacts() {
         {filteredContacts.length === 0 ? (
           <div className="bg-white rounded-xl p-12 text-center border border-gray-200">
             <Mail className="mx-auto text-gray-400 mb-4" size={48} />
-            <p className="text-gray-600">Inga kontaktuppgifter hittades</p>
+            <p className="text-gray-600">
+              {t('admin.contacts.none') ?? 'Inga kontaktuppgifter hittades'}
+            </p>
           </div>
         ) : (
           <div className="space-y-4">
@@ -102,7 +110,7 @@ export default function AdminContacts() {
                       <button
                         onClick={() => handleMarkRead(contact.id, true)}
                         className="p-2 hover:bg-green-100 rounded-lg transition-colors"
-                        title="Markera som läst"
+                        title={t('admin.contacts.markRead')}
                       >
                         <Check size={18} className="text-green-600" />
                       </button>
@@ -110,7 +118,7 @@ export default function AdminContacts() {
                       <button
                         onClick={() => handleMarkRead(contact.id, false)}
                         className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                        title="Markera som oläst"
+                        title={t('admin.contacts.markUnread')}
                       >
                         <X size={18} className="text-gray-600" />
                       </button>
@@ -118,7 +126,7 @@ export default function AdminContacts() {
                     <button
                       onClick={() => handleDelete(contact.id)}
                       className="p-2 hover:bg-red-100 rounded-lg transition-colors"
-                      title="Radera"
+                      title={t('common.delete') ?? 'Radera'}
                     >
                       <Trash2 size={18} className="text-red-600" />
                     </button>
@@ -127,14 +135,18 @@ export default function AdminContacts() {
 
                 {contact.painting && (
                   <div className="mb-3">
-                    <span className="text-sm text-gray-600">Målning: </span>
+                    <span className="text-sm text-gray-600">
+                      {t('admin.contacts.painting')}{" "}
+                    </span>
                     <span className="text-sm font-medium">{contact.painting}</span>
                   </div>
                 )}
 
                 {contact.subject && (
                   <div className="mb-3">
-                    <span className="text-sm text-gray-600">Ämne: </span>
+                    <span className="text-sm text-gray-600">
+                      {t('admin.contacts.subject')}{" "}
+                    </span>
                     <span className="text-sm font-medium">{contact.subject}</span>
                   </div>
                 )}

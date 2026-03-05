@@ -4,9 +4,11 @@ import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { useLanguage } from "./LanguageProvider";
 
 const ContactSection = () => {
   const router = useRouter();
+  const { t } = useLanguage();
 
   return (
     <section className="w-full px-4 sm:px-6 md:px-32 py-8 sm:py-10">
@@ -33,7 +35,7 @@ const ContactSection = () => {
             transition={{ duration: 0.4, delay: 0.25 }}
             className="inline-block mb-4 sm:mb-6 px-3 sm:px-4 py-2 text-sm bg-white rounded-full text-gray-700"
           >
-100+ specialgjorda målningar
+            {t("contactSection.stat")}
           </motion.span>
 
           {/* Heading */}
@@ -43,8 +45,9 @@ const ContactSection = () => {
             transition={{ duration: 0.6, delay: 0.35 }}
             className="text-[32px] sm:text-[38px] md:text-[44px] leading-[1.15] font-medium text-black mb-6 sm:mb-8"
           >
-            Bara din fantasi <br />
-            begränsar dig
+            {t("contactSection.headingLine1") ?? "Bara din fantasi"}
+            <br />
+            {t("contactSection.limitsYou")}
           </motion.h1>
 
           {/* Button */}
@@ -55,7 +58,7 @@ const ContactSection = () => {
             transition={{ duration: 0.25 }}
             className="group flex items-center gap-3 bg-white px-4 sm:px-6 py-2.5 sm:py-2 rounded-full text-lg font-medium shadow-sm mx-auto md:mx-0"
           >
-Kontakta mig
+            {t("contactSection.button")}
 
             <div
               className="

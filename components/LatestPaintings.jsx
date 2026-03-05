@@ -6,6 +6,7 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { getUserProductsApi } from "@/lib/userApi";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
+import { useLanguage } from "./LanguageProvider";
 
 function normalizeProduct(item) {
   const inStock = item.inStock;
@@ -25,6 +26,7 @@ function normalizeProduct(item) {
 
 const LatestPaintings = () => {
   const [latestArtworks, setLatestArtworks] = useState([]);
+  const { t } = useLanguage();
 
   useEffect(() => {
     loadArtworks();
@@ -48,7 +50,7 @@ const LatestPaintings = () => {
         transition={{ duration: 0.6 }}
         className="text-[28px] sm:text-[34px] md:text-[42px] font-semibold mb-10 md:mb-14"
       >
-Senaste målningarna
+        {t("latestPaintings.title")}
       </motion.h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
@@ -69,7 +71,7 @@ Senaste målningarna
                 {/* For Sale Badge */}
                 {art.forSale && (
                   <div className="absolute top-4 right-4 md:top-6 md:right-6 bg-white/80 text-xs sm:text-sm px-3 sm:px-4 py-1.5 rounded-full shadow-sm z-50">
-                    $ Till salu
+                    $ {t("artCard.forSale") ?? "Till salu"}
                   </div>
                 )}
 
@@ -146,7 +148,7 @@ Senaste målningarna
                 transition-all duration-500
               "
             >
-Se detaljer
+              {t("artCard.seDetails") ?? "Se detaljer"}
             </span>
 
             <ArrowRight

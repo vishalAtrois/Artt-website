@@ -1,5 +1,6 @@
 import "./globals.css";
 import ToastProvider from "@/components/ToastProvider";
+import { LanguageProvider } from "@/components/LanguageProvider";
 
 export const metadata = {
   title: "Art website",
@@ -10,8 +11,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        {children}
-        <ToastProvider />
+        <LanguageProvider>
+          {children}
+          <ToastProvider />
+        </LanguageProvider>
       </body>
     </html>
   );

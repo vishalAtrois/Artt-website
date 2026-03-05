@@ -4,6 +4,7 @@ import ArtCard from "./ArtCard";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { getUserProductsApi } from "@/lib/userApi";
+import { useLanguage } from "./LanguageProvider";
 
 const container = {
   hidden: {},
@@ -33,6 +34,7 @@ function normalizeProduct(item) {
 const ArtGrid = () => {
   const [artworks, setArtworks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { t } = useLanguage();
 
   useEffect(() => {
     loadArtworks();
@@ -51,9 +53,13 @@ const ArtGrid = () => {
   return (
     <section className="bg-[#f7f5ef] px-4 sm:px-6 md:px-[50px] py-10">
       {loading ? (
-        <div className="text-center py-12 text-gray-500">Laddar konstverk...</div>
+        <div className="text-center py-12 text-gray-500">
+          {t("artGrid.loading") ?? "Laddar konstverk..."}
+        </div>
       ) : artworks.length === 0 ? (
-        <div className="text-center py-12 text-gray-500">Inga konstverk är tillgängliga.</div>
+        <div className="text-center py-12 text-gray-500">
+          {t("artGrid.empty")}
+        </div>
       ) : (
         <motion.div
           variants={container}

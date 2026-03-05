@@ -2,8 +2,11 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useLanguage } from "./LanguageProvider";
 
 export default function InAboutSection() {
+  const { t } = useLanguage();
+
   return (
     <section className="relative w-full bg-[#f6f4ef] py-16 sm:py-20 md:py-28 px-4 sm:px-6 md:px-36 overflow-hidden">
       
@@ -15,7 +18,7 @@ export default function InAboutSection() {
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="text-center text-2xl sm:text-3xl md:text-4xl font-normal text-black mb-12 sm:mb-16 md:mb-20"
       >
-        Om
+        {t("about.title")}
       </motion.h2>
 
       {/* right floating dot */}
@@ -71,7 +74,7 @@ export default function InAboutSection() {
             transition={{ duration: 0.5 }}
             className="text-2xl sm:text-3xl md:text-4xl font-normal text-black mb-4 sm:mb-6"
           >
-Konst är min passion
+            {t("inAbout.title")}
           </motion.h3>
 
           <motion.p
@@ -81,8 +84,7 @@ Konst är min passion
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-gray-600 leading-relaxed mb-4 sm:mb-6"
           >
-         Jag kanaliserar över ett decennium av konstnärlig utforskning i varje komposition, och blandar uttrycksfulla penseldrag med harmoniska paletter. Mina verk inbjuder betraktaren att stanna upp och engagera sig i subtila nyanser av ljus och form.
-
+            {t("inAbout.paragraph1")}
           </motion.p>
 
           <motion.p
@@ -92,8 +94,7 @@ Konst är min passion
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-gray-600 leading-relaxed mb-4 sm:mb-6"
           >
-           Jag ställs ut över hela Europa – både i intima gallerier och storskaliga konst mässor – och strävar efter att koppla samman rum med meningsfulla visuella berättelser. Vare sig det är genom djärva abstrakta verk eller fina studier, återspeglar varje målning mitt engagemang för hantverk och historieberättande.
-
+            {t("inAbout.paragraph2")}
           </motion.p>
 
           <motion.p
@@ -103,7 +104,7 @@ Konst är min passion
             transition={{ duration: 0.5, delay: 0.3 }}
             className="text-gray-600 leading-relaxed mb-6 sm:mb-10"
           >
-Följ med mig och upptäck hur konst kan förvandla ett rum och lyfta stämningen.
+            {t("inAbout.paragraph3")}
           </motion.p>
 
           {/* Signature */}

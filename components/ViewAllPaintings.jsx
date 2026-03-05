@@ -4,9 +4,11 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { useLanguage } from "./LanguageProvider";
 
 const ViewAllPaintings = () => {
   const router = useRouter();
+  const { t } = useLanguage();
 
   return (
     <section className="bg-[#f7f5ef] px-4 sm:px-6 md:px-[130px] py-8 sm:py-12 md:py-[60px]">
@@ -26,8 +28,8 @@ const ViewAllPaintings = () => {
           transition={{ duration: 0.5, delay: 0.15 }}
           className="text-center md:text-left mb-6 md:mb-0"
         >
-          <h2 className="text-[28px] sm:text-[36px] md:text-[48px] font-medium text-black leading-tight">
-          Visa alla <br /> Målningar
+          <h2 className="text-[28px] sm:text-[36px] md:text-[48px] font-medium text-black leading-tight whitespace-pre-line">
+            {t("viewAllPaintings.button")}
           </h2>
         </motion.div>
 

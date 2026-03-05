@@ -3,8 +3,11 @@
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { useLanguage } from "./LanguageProvider";
 
 const AboutSection = () => {
+  const { t } = useLanguage();
+
   return (
     <section className="bg-[#f7f5ef] px-6 sm:px-10 md:px-[130px] py-[80px] md:py-[120px]">
       <motion.div
@@ -29,7 +32,7 @@ const AboutSection = () => {
           className="flex-shrink-0 text-center md:text-left"
         >
           <h2 className="text-[36px] md:text-[48px] font-medium text-black mb-6 md:mb-8">
-          Om
+            {t("about.title")}
           </h2>
 
           <motion.button
@@ -38,7 +41,7 @@ const AboutSection = () => {
             transition={{ duration: 0.25 }}
             className="mx-auto md:mx-0 flex items-center gap-3 bg-[#e8e2d6] px-6 py-3 rounded-full text-[15px] text-black"
           >
-Mer om mig
+            {t("about.moreAboutMe")}
             <span className="w-8 h-8 rounded-full bg-white flex items-center justify-center">
               <ArrowUpRight size={16} />
             </span>
@@ -59,7 +62,7 @@ Mer om mig
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-           Jag är en bildkonstnär med över tio års erfarenhet av måleri och visuell kommunikation. I mitt arbete kombinerar jag fina penseldrag med minimalistiska kompositioner för att skapa känslosamma visuella berättelser.
+            {t("about.paragraph1")}
           </motion.p>
 
           <motion.p
@@ -67,8 +70,7 @@ Mer om mig
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.35 }}
           >
-  Jag samarbetar med gallerier och privata samlare och deltar i utställningar både hemma och utomlands. Mitt tillvägagångssätt kombinerar traditionella tekniker med moderna metoder, vilket ger varje verk ett unikt djup och precision.
-
+            {t("about.paragraph2")}
           </motion.p>
 
           {/* SIGNATURE */}

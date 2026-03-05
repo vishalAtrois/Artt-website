@@ -2,20 +2,22 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { FaTiktok, FaXTwitter, FaInstagram } from "react-icons/fa6";
+import { FaTiktok, FaXTwitter, FaInstagram, FaFacebookF } from "react-icons/fa6";
 import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
 import { motion, AnimatePresence } from "framer-motion";
-
-// Configure navbar items here with any label + route you want
-const navItems = [
-  { label: "Hemsida", href: "/" },
-  { label: "Målningar", href: "/Paintings" },
-  { label: "Om", href: "/About" },
-  { label: "Kontakta", href: "/Contact" },
-];
+import { useLanguage } from "./LanguageProvider";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const { t } = useLanguage();
+
+  const navItems = [
+    { label: t("nav.home"), href: "/" },
+    { label: t("nav.paintings"), href: "/Paintings" },
+    { label: t("nav.about"), href: "/About" },
+    { label: t("nav.contact"), href: "/Contact" },
+  ];
 
   return (
     <nav className="h-[90px] bg-[#f7f5ef] flex items-center justify-between px-[20px] md:px-[80px] relative z-50">
@@ -59,23 +61,26 @@ const Navbar = () => {
         ))}
       </motion.ul>
 
-      {/* Desktop Icons */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.4, delay: 0.3 }}
-        className="hidden md:flex gap-[18px]"
-      >
-        <motion.span whileHover={{ y: -3 }}>
-          <FaTiktok className="text-[16px] text-black" />
-        </motion.span>
-        <motion.span whileHover={{ y: -3 }}>
-          <FaXTwitter className="text-[16px] text-black" />
-        </motion.span>
-        <motion.span whileHover={{ y: -3 }}>
-          <FaInstagram className="text-[16px] text-black" />
-        </motion.span>
-      </motion.div>
+      {/* Desktop Icons + Language */}
+      <div className="hidden md:flex items-center gap-[18px]">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.4, delay: 0.3 }}
+          className="flex gap-[18px]"
+        >
+          
+          <motion.span whileHover={{ y: -3 }}>
+            <FaFacebookF className="text-[16px] text-black" />
+          </motion.span>
+          <motion.span whileHover={{ y: -3 }}>
+            <FaInstagram className="text-[16px] text-black" />
+          </motion.span>
+        </motion.div>
+        <div className="ml-4">
+          <LanguageSwitcher />
+        </div>
+      </div>
 
       {/* Hamburger */}
       <motion.button
@@ -146,14 +151,15 @@ const Navbar = () => {
                 </motion.div>
               ))}
 
+              <LanguageSwitcher />
+
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3 }}
                 className="flex gap-[18px] pt-2"
               >
-                <FaTiktok className="text-[16px] text-black" />
-                <FaXTwitter className="text-[16px] text-black" />
+                <FaFacebookF className="text-[16px] text-black" />
                 <FaInstagram className="text-[16px] text-black" />
               </motion.div>
             </motion.div>

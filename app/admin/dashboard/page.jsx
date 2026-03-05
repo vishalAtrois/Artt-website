@@ -6,6 +6,7 @@ import { AdminStorage } from '@/lib/adminStorage';
 import { getProductsApi } from '@/lib/adminApi';
 import { Image, Mail, Tag, TrendingUp } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '@/components/LanguageProvider';
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState({
@@ -15,6 +16,7 @@ export default function AdminDashboard() {
     totalCategories: 0,
   });
   const [loading, setLoading] = useState(true);
+  const { t } = useLanguage();
 
   useEffect(() => {
     loadStats();
@@ -76,8 +78,10 @@ export default function AdminDashboard() {
     <AdminLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-semibold mb-2">Instrumentpanel</h1>
-          <p className="text-gray-600">Översikt över ditt konstgalleri</p>
+          <h1 className="text-3xl font-semibold mb-2">Dashboard</h1>
+          <p className="text-gray-600">
+            {t('admin.dashboard.subtitle')}
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -104,28 +108,42 @@ export default function AdminDashboard() {
         </div>
 
         <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-          <h2 className="text-xl font-semibold mb-4">Snabba åtgärder</h2>
+          <h2 className="text-xl font-semibold mb-4">
+            {t('admin.dashboard.quickActions')}
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <a
               href="/admin/artworks?action=add"
               className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
             >
-              <h3 className="font-medium mb-1">Lägg till nytt konstverk</h3>
-              <p className="text-sm text-gray-600">Ladda upp en ny målning</p>
+              <h3 className="font-medium mb-1">
+                {t('admin.dashboard.addArtwork')}
+              </h3>
+              <p className="text-sm text-gray-600">
+                {t('admin.dashboard.addArtworkDesc')}
+              </p>
             </a>
             <a
               href="/admin/contacts"
               className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
             >
-              <h3 className="font-medium mb-1">Visa meddelanden</h3>
-              <p className="text-sm text-gray-600">Kontrollera kontaktuppgifter</p>
+              <h3 className="font-medium mb-1">
+                {t('admin.dashboard.viewMessages') ?? 'View messages'}
+              </h3>
+              <p className="text-sm text-gray-600">
+                {t('admin.dashboard.viewMessagesDesc') ?? 'Check contact entries'}
+              </p>
             </a>
             <a
               href="/admin/categories"
               className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
             >
-              <h3 className="font-medium mb-1">Hantera kategorier</h3>
-              <p className="text-sm text-gray-600">Lägg till eller redigera kategorier</p>
+              <h3 className="font-medium mb-1">
+                {t('admin.dashboard.manageCategories') ?? 'Manage categories'}
+              </h3>
+              <p className="text-sm text-gray-600">
+                {t('admin.dashboard.manageCategoriesDesc')}
+              </p>
             </a>
           </div>
         </div>

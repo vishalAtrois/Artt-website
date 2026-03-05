@@ -5,8 +5,10 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useState } from "react";
 import { AdminStorage } from "@/lib/adminStorage";
+import { useLanguage } from "./LanguageProvider";
 
 export default function StartConversation() {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -41,7 +43,7 @@ export default function StartConversation() {
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="text-center text-4xl md:text-5xl font-normal text-black mb-4"
       >
-Starta konversationen
+        {t("contact.title") ?? "Starta konversationen"}
       </motion.h2>
 
       <motion.p
@@ -51,8 +53,7 @@ Starta konversationen
         transition={{ duration: 0.5, delay: 0.1 }}
         className="text-center text-gray-600 max-w-xl mx-auto mb-20"
       >
-      Intresserad av en målning? Har du en fråga? Fyll bara i formuläret eller kontakta mig via
-{" "}
+        {t("contact.intro")}{" "}
         <span className="underline">example@example.com</span>
       </motion.p>
 
@@ -110,7 +111,9 @@ Starta konversationen
               viewport={{ once: false }}
               transition={{ delay: 0.1 }}
             >
-              <label className="text-sm text-black block mb-2">Namn</label>
+              <label className="text-sm text-black block mb-2">
+                {t("contact.nameLabel") ?? "Namn"}
+              </label>
               <input
                 type="text"
                 placeholder="Jane Smith"
@@ -127,7 +130,9 @@ Starta konversationen
               viewport={{ once: false }}
               transition={{ delay: 0.15 }}
             >
-              <label className="text-sm text-black block mb-2">E-post</label>
+              <label className="text-sm text-black block mb-2">
+                {t("contact.emailLabel") ?? "E-post"}
+              </label>
               <input
                 type="email"
                 placeholder="example@example.com"
@@ -146,7 +151,10 @@ Starta konversationen
             transition={{ delay: 0.2 }}
           >
             <label className="text-sm text-black block mb-2">
-            Målning <span className="text-gray-400">(frivillig)</span>
+              {t("contact.paintingLabel")}{" "}
+              <span className="text-gray-400">
+                {t("contact.paintingOptional")}
+              </span>
             </label>
             <input
               type="text"
@@ -163,10 +171,12 @@ Starta konversationen
             viewport={{ once: false }}
             transition={{ delay: 0.25 }}
           >
-            <label className="text-sm text-black block mb-2">Ämne</label>
+            <label className="text-sm text-black block mb-2">
+              {t("contact.subjectLabel")}
+            </label>
             <input
               type="text"
-              placeholder="Måleribeställning"
+              placeholder={t("contact.subjectPlaceholder")}
               value={formData.subject}
               onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
               className="w-full rounded-md border border-gray-200 px-4 py-3 text-sm outline-none focus:ring-1 focus:ring-black"
@@ -179,10 +189,12 @@ Starta konversationen
             viewport={{ once: false }}
             transition={{ delay: 0.3 }}
           >
-            <label className="text-sm text-black block mb-2">Meddelande</label>
+            <label className="text-sm text-black block mb-2">
+              {t("contact.messageLabel") ?? "Meddelande"}
+            </label>
             <textarea
               rows="4"
-              placeholder='Jag skulle vilja köpa målningen "Tiden väntade inte"...'
+              placeholder={t("contact.messagePlaceholder")}
               value={formData.message}
               onChange={(e) => setFormData({ ...formData, message: e.target.value })}
               className="w-full rounded-md border border-gray-200 px-4 py-3 text-sm outline-none focus:ring-1 focus:ring-black resize-none"
@@ -196,7 +208,7 @@ Starta konversationen
               animate={{ opacity: 1 }}
               className="p-3 bg-green-100 text-green-800 rounded-lg text-sm text-center"
             >
-Meddelandet har skickats!
+              {t("contact.sent") ?? "Meddelandet har skickats!"}
             </motion.div>
           )}
           <motion.button
@@ -205,7 +217,7 @@ Meddelandet har skickats!
             type="submit"
             className="w-full bg-[#4b463f] text-white py-4 rounded-full flex items-center justify-center gap-3 hover:bg-black transition"
           >
-Skicka meddelande
+            {t("contact.sendButton") ?? "Skicka meddelande"}
 
             <span className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
               <ArrowRight className="w-5 h-5 text-black stroke-[3]" />

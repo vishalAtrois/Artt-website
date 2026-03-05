@@ -5,10 +5,12 @@ import AdminLayout from '@/components/AdminLayout';
 import { AdminStorage } from '@/lib/adminStorage';
 import { Plus, Trash2, Tag } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '@/components/LanguageProvider';
 
 export default function AdminCategories() {
   const [categories, setCategories] = useState([]);
   const [newCategory, setNewCategory] = useState('');
+  const { t } = useLanguage();
 
   useEffect(() => {
     loadCategories();
@@ -29,7 +31,7 @@ export default function AdminCategories() {
   };
 
   const handleDelete = (category) => {
-    if (confirm(`Är du säker på att du vill radera"${category}"? Detta kommer inte att ta bort det från befintliga konstverk.`)) {
+    if (confirm(t('admin.categories.deleteConfirm').replace('{category}', category))) {
       AdminStorage.deleteCategory(category);
       loadCategories();
     }
@@ -39,8 +41,12 @@ export default function AdminCategories() {
     <AdminLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-semibold mb-2">Kategorier</h1>
-          <p className="text-gray-600">Hantera konstkategorier</p>
+          <h1 className="text-3xl font-semibold mb-2">
+            {t('admin.categories.title') ?? 'Kategorier'}
+          </h1>
+          <p className="text-gray-600">
+            {t('admin.categories.subtitle') ?? 'Hantera konstkategorier'}
+          </p>
         </div>
 
         <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
@@ -57,14 +63,16 @@ export default function AdminCategories() {
               className="flex items-center gap-2 bg-[#4b463f] text-white px-6 py-2 rounded-lg hover:bg-black transition-colors"
             >
               <Plus size={20} />
-              Lägg till kategori
+              {t('admin.categories.addButton')}
             </button>
           </form>
 
           {categories.length === 0 ? (
             <div className="text-center py-12">
               <Tag className="mx-auto text-gray-400 mb-4" size={48} />
-              <p className="text-gray-600">Inga kategorier än</p>
+              <p className="text-gray-600">
+                {t('admin.categories.none')}
+              </p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

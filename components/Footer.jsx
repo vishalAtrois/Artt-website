@@ -3,8 +3,11 @@
 import Link from "next/link";
 import { FaTiktok, FaXTwitter, FaInstagram } from "react-icons/fa6";
 import { motion } from "framer-motion";
+import { useLanguage } from "./LanguageProvider";
 
 const Footer = () => {
+  const { t } = useLanguage();
+
   return (
     <footer className="w-full bg-[#FAF8F3] px-4 sm:px-6 md:px-36 pt-12 sm:pt-16 md:pt-24 pb-8 sm:pb-10">
       <div className="max-w-7xl mx-auto">
@@ -59,26 +62,28 @@ const Footer = () => {
             transition={{ duration: 0.5, ease: "easeOut" }}
             className="text-center md:text-left mt-8 md:mt-0"
           >
-            <h4 className="text-sm font-medium mb-4 sm:mb-6">Pages</h4>
+            <h4 className="text-sm font-medium mb-4 sm:mb-6">
+              {t("footer.pages")}
+            </h4>
             <ul className="space-y-2 sm:space-y-4 text-sm text-gray-700">
               <li>
                 <motion.div whileHover={{ x: 4 }} transition={{ duration: 0.2 }}>
-                  <Link href="/">Hemsida</Link>
+                  <Link href="/">{t("nav.home")}</Link>
                 </motion.div>
               </li>
               <li>
                 <motion.div whileHover={{ x: 4 }} transition={{ duration: 0.2 }}>
-                  <Link href="/Paintings">Målningar</Link>
+                  <Link href="/Paintings">{t("nav.paintings")}</Link>
                 </motion.div>
               </li>
               <li>
                 <motion.div whileHover={{ x: 4 }} transition={{ duration: 0.2 }}>
-                  <Link href="/About">Om</Link>
+                  <Link href="/About">{t("nav.about")}</Link>
                 </motion.div>
               </li>
               <li>
                 <motion.div whileHover={{ x: 4 }} transition={{ duration: 0.2 }}>
-                  <Link href="/Contact">Kontakta</Link>
+                  <Link href="/Contact">{t("nav.contact")}</Link>
                 </motion.div>
               </li>
             </ul>
@@ -94,7 +99,7 @@ const Footer = () => {
             className="text-center md:text-left mt-8 md:mt-0"
           >
             <h4 className="text-sm font-medium mb-4 sm:mb-6">
-            Tavlor till salu
+              {t("footer.forSale")}
             </h4>
             <ul className="space-y-2 sm:space-y-4 text-sm text-gray-700">
               <li>Obsidian Tide</li>

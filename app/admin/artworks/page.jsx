@@ -9,6 +9,7 @@ import { Plus, Edit, Trash2, Eye, Upload, X, Image as ImageIcon, AlertTriangle }
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useLanguage } from '@/components/LanguageProvider';
 
 function normalizeProduct(item) {
   const inStock = item.inStock;
@@ -49,6 +50,7 @@ export default function AdminArtworks() {
     forSale: true,
     layout: 'vertical',
   });
+  const { t } = useLanguage();
 
   useEffect(() => {
     loadArtworks();
@@ -64,7 +66,7 @@ export default function AdminArtworks() {
     const normalized = Array.isArray(list) ? list.map(normalizeProduct) : [];
     setArtworks(normalized);
     if (!res?.success && normalized.length === 0 && res?.message) {
-      toast.error(res.message || 'Misslyckades med att ladda konstverk');
+      toast.error(res.message || t('admin.artworks.loadError') ?? 'Misslyckades med att ladda konstverk');
     }
   };
 
@@ -80,7 +82,7 @@ export default function AdminArtworks() {
           const uploadRes = await uploadImageApi(token, file);
           imageUrl = uploadRes?.data?.image ?? uploadRes?.data?.url ?? uploadRes?.data?.imageUrl ?? uploadRes?.url ?? '';
           if (!imageUrl) {
-            toast.error(uploadRes?.message || 'Det gick inte att ladda upp bilden');
+            toast.error(uploadRes?.message || t('admin.artworks.uploadError') ?? 'Det gick inte att ladda upp bilden');
             setSubmitting(false);
             return;
           }
@@ -95,19 +97,19 @@ export default function AdminArtworks() {
           year: formData.year || '',
         });
         if (res?.success) {
-          toast.success('Konstverket har uppdaterats');
+          toast.success(t('admin.artworks.updateSuccess') ?? 'Konstverket har uppdaterats');
           setShowModal(false);
           resetForm();
           loadArtworks();
         } else {
-          toast.error(res?.message || 'Misslyckades med att uppdatera bilden');
+          toast.error(res?.message || t('admin.artworks.updateError') ?? 'Misslyckades med att uppdatera bilden');
         }
         return;
       }
 
       const file = imageFile || imageInputRef.current?.files?.[0];
       if (!file) {
-        toast.error('Välj en bild');
+        toast.error(t('admin.artworks.selectImageError'));
         setSubmitting(false);
         return;
       }
@@ -128,16 +130,16 @@ export default function AdminArtworks() {
         year: formData.year || '',
       });
       if (res?.success) {
-        toast.success('Konstverk har lagts till');
+        toast.success(t('admin.artworks.addSuccess') ?? 'Konstverk har lagts till');
         setShowModal(false);
         resetForm();
         loadArtworks();
       } else {
-        toast.error(res?.message || 'Misslyckades med att lägga till bildmaterial');
+        toast.error(res?.message || t('admin.artworks.addError'));
       }
     } catch (err) {
       console.error(err);
-      toast.error('Något gick fel');
+      toast.error(t('admin.artworks.genericError'));
     } finally {
       setSubmitting(false);
     }
@@ -174,16 +176,16 @@ export default function AdminArtworks() {
     try {
       const res = await deleteProductApi(token, artworkToDelete.id);
       if (res?.success) {
-        toast.success('Konstverket har raderats');
+        toast.success(t('admin.artworks.deleteSuccess') ?? 'Konstverket har raderats');
         setShowDeleteModal(false);
         setArtworkToDelete(null);
         loadArtworks();
       } else {
-        toast.error(res?.message || 'Misslyckades med att ta bort bilden');
+        toast.error(res?.message || t('admin.artworks.deleteError') ?? 'Misslyckades med att ta bort bilden');
       }
     } catch (err) {
       console.error(err);
-      toast.error('Något gick fel');
+      toast.error(t('admin.artworks.genericError'));
     } finally {
       setDeleting(false);
     }
@@ -229,8 +231,12 @@ export default function AdminArtworks() {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-semibold mb-2">Konstverk</h1>
-            <p className="text-gray-600">Hantera din konstsamling</p>
+            <h1 className="text-3xl font-semibold mb-2">
+              {t('admin.artworks.title') ?? 'Konstverk'}
+            </h1>
+            <p className="text-gray-600">
+              {t('admin.artworks.subtitle') ?? 'Hantera din konstsamling'}
+            </p>
           </div>
           <button
             onClick={() => {
@@ -240,23 +246,35 @@ export default function AdminArtworks() {
             className="flex items-center gap-2 bg-[#4b463f] text-white px-4 py-2 rounded-lg hover:bg-black transition-colors"
           >
             <Plus size={20} />
-            Lägg till konstverk
+            {t('admin.artworks.addArtwork')}
           </button>
         </div>
 
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
           {loading ? (
-            <div className="p-12 text-center text-gray-500">Laddar konstverk...</div>
+            <div className="p-12 text-center text-gray-500">
+              {t('artGrid.loading') ?? 'Laddar konstverk...'}
+            </div>
           ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-gray-50 border-b border-gray-200">
                 <tr>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Bild</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Titel</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Kategori</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Till salu</th>
-                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Åtgärder</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">
+                    {t('admin.artworks.imageHeader') ?? 'Bild'}
+                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">
+                    {t('admin.artworks.titleHeader') ?? 'Titel'}
+                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">
+                    {t('admin.artworks.categoryHeader') ?? 'Kategori'}
+                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">
+                    {t('admin.artworks.forSaleHeader') ?? 'Till salu'}
+                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">
+                    {t('admin.artworks.actions')}
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
@@ -280,7 +298,9 @@ export default function AdminArtworks() {
                             />
                           )
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center text-gray-400 text-xs">No image</div>
+                          <div className="w-full h-full flex items-center justify-center text-gray-400 text-xs">
+                            {t('admin.artworks.noImage') ?? 'No image'}
+                          </div>
                         )}
                       </div>
                     </td>
@@ -353,7 +373,9 @@ export default function AdminArtworks() {
                   className="bg-white rounded-2xl p-6 md:p-8 w-full max-w-2xl max-h-[90vh] overflow-y-auto"
                 >
                   <h2 className="text-2xl font-semibold mb-6">
-                    {editingArtwork ? 'Redigera konstverk' : 'Lägg till nytt konstverk'}
+                    {editingArtwork
+                      ? t('admin.artworks.editTitle') ?? 'Redigera konstverk'
+                      : t('admin.artworks.addNewTitle') ?? 'Lägg till nytt konstverk'}
                   </h2>
 
                   <form onSubmit={handleSubmit} className="space-y-4">
@@ -372,7 +394,7 @@ export default function AdminArtworks() {
 
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Kategori *
+                      {t('admin.artworks.categoryLabel') ?? 'Kategori *'}
                       </label>
                       <select
                         value={formData.category}
@@ -389,7 +411,7 @@ export default function AdminArtworks() {
 
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Bild *
+                      {t('admin.artworks.imageLabel') ?? 'Bild *'}
                       </label>
                       
                       {imagePreview ? (
@@ -461,11 +483,12 @@ export default function AdminArtworks() {
                             <p className={`text-sm font-medium mb-1 ${
                               isDragging ? 'text-[#4b463f]' : 'text-gray-700'
                             }`}>
-                              {isDragging ? 'Drop image here' : 'Click to upload or drag and drop'}
+                              {isDragging
+                                ? t('admin.artworks.dropHere') ?? 'Drop image here'
+                                : t('admin.artworks.clickToUpload') ?? 'Click to upload or drag and drop'}
                             </p>
                             <p className="text-xs text-gray-500">
-                            PNG, JPG, GIF upp till 10 MB
-
+                              PNG, JPG, GIF upp till 10 MB
                             </p>
                           </div>
                         </div>
@@ -474,7 +497,7 @@ export default function AdminArtworks() {
 
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Beskrivning *
+                      {t('admin.artworks.descriptionLabel') ?? 'Beskrivning *'}
                       </label>
                       <textarea
                         value={formData.description}
@@ -488,7 +511,7 @@ export default function AdminArtworks() {
                     <div className="grid grid-cols-3 gap-4">
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Pris
+                        {t('admin.artworks.priceLabel') ?? 'Pris'}
                         </label>
                         <input
                           type="text"
@@ -501,7 +524,7 @@ export default function AdminArtworks() {
 
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                        År
+                        {t('admin.artworks.year')}
                         </label>
                         <input
                           type="text"
@@ -514,7 +537,7 @@ export default function AdminArtworks() {
 
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                        I lager
+                        {t('admin.artworks.inStockLabel') ?? 'I lager'}
                         </label>
                         <select
                           value={formData.forSale ? 'true' : 'false'}
@@ -533,7 +556,13 @@ export default function AdminArtworks() {
                         disabled={submitting}
                         className="flex-1 bg-[#4b463f] text-white py-3 rounded-lg font-medium hover:bg-black transition-colors disabled:opacity-60"
                       >
-                        {submitting ? (editingArtwork ? 'Uppdaterar...' : 'Skapande...') : (editingArtwork ? 'Uppdatera' : 'Skapa')}
+                        {submitting
+                          ? editingArtwork
+                            ? t('admin.artworks.updating') ?? 'Uppdaterar...'
+                            : t('admin.artworks.creating') ?? 'Skapande...'
+                          : editingArtwork
+                          ? t('admin.artworks.updateButton') ?? 'Uppdatera'
+                          : t('admin.artworks.createButton') ?? 'Skapa'}
                       </button>
                       <button
                         type="button"
@@ -543,7 +572,7 @@ export default function AdminArtworks() {
                         }}
                         className="flex-1 bg-gray-100 text-gray-700 py-3 rounded-lg font-medium hover:bg-gray-200 transition-colors"
                       >
-                        Avboka
+                        {t('common.cancel') ?? 'Avboka'}
                       </button>
                     </div>
                   </form>
@@ -579,12 +608,11 @@ export default function AdminArtworks() {
                   </div>
                   
                   <h2 className="text-2xl font-semibold text-center mb-2">
-                  Ta bort konstverk
+                    {t('admin.artworks.deleteTitle') ?? 'Ta bort konstverk'}
                   </h2>
                   
                   <p className="text-gray-600 text-center mb-6">
-                  Är du säker på att du vill radera<span className="font-semibold text-gray-900">"{artworkToDelete.title}"</span>? Den här åtgärden kan inte ångras.
-
+                    {t('admin.artworks.deleteConfirm').replace('{title}', artworkToDelete.title)}
                   </p>
 
                   <div className="flex gap-4">
@@ -594,7 +622,7 @@ export default function AdminArtworks() {
                       disabled={deleting}
                       className="flex-1 bg-gray-100 text-gray-700 py-3 rounded-lg font-medium hover:bg-gray-200 transition-colors disabled:opacity-60"
                     >
-                      Avboka
+                      {t('common.cancel') ?? 'Avboka'}
                     </button>
                     <button
                       type="button"
@@ -605,12 +633,12 @@ export default function AdminArtworks() {
                       {deleting ? (
                         <>
                           <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                          Tar bort...
+                          {t('common.deleting') ?? 'Tar bort...'}
                         </>
                       ) : (
                         <>
                           <Trash2 size={18} />
-                          Radera
+                          {t('common.delete') ?? 'Radera'}
                         </>
                       )}
                     </button>

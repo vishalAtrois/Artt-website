@@ -7,6 +7,7 @@ import { getFaqsApi, createFaqApi, deleteFaqApi } from '@/lib/adminApi';
 import toast from 'react-hot-toast';
 import { Plus, Trash2, HelpCircle, AlertTriangle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '@/components/LanguageProvider';
 
 export default function AdminFAQs() {
   const [faqs, setFaqs] = useState([]);
@@ -21,6 +22,7 @@ export default function AdminFAQs() {
     answer: '',
     order: '',
   });
+  const { t } = useLanguage();
 
   useEffect(() => {
     loadFaqs();
@@ -51,16 +53,16 @@ export default function AdminFAQs() {
         order: formData.order || '1',
       });
       if (res?.success) {
-        toast.success('FAQ har lagts till');
+        toast.success(t('admin.faq.addSuccess') ?? 'FAQ added');
         setShowModal(false);
         resetForm();
         loadFaqs();
       } else {
-        toast.error(res?.message || 'Misslyckades med att lägga till vanliga frågor');
+        toast.error(res?.message || t('admin.faq.addError'));
       }
     } catch (err) {
       console.error(err);
-      toast.error('Något gick fel');
+      toast.error(t('admin.faq.genericError'));
     } finally {
       setSubmitting(false);
     }
@@ -86,16 +88,16 @@ export default function AdminFAQs() {
     try {
       const res = await deleteFaqApi(token, faqToDelete._id ?? faqToDelete.id);
       if (res?.success) {
-        toast.success('FAQ raderades framgångsrikt');
+        toast.success(t('admin.faq.deleteSuccess'));
         setShowDeleteModal(false);
         setFaqToDelete(null);
         loadFaqs();
       } else {
-        toast.error(res?.message || 'Misslyckades med att ta bort vanliga frågor');
+        toast.error(res?.message || t('admin.faq.deleteError'));
       }
     } catch (err) {
       console.error(err);
-      toast.error('Något gick fel');
+      toast.error(t('admin.faq.genericError'));
     } finally {
       setDeleting(false);
     }
@@ -111,8 +113,10 @@ export default function AdminFAQs() {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-semibold mb-2">Vanliga frågor</h1>
-            <p className="text-gray-600">Hantera vanliga frågor</p>
+            <h1 className="text-3xl font-semibold mb-2">
+              {t('admin.faq.title')}
+            </h1>
+            <p className="text-gray-600">{t('admin.faq.subtitle')}</p>
           </div>
           <button
             onClick={() => {
@@ -122,16 +126,19 @@ export default function AdminFAQs() {
             className="flex items-center gap-2 bg-[#4b463f] text-white px-4 py-2 rounded-lg hover:bg-black transition-colors"
           >
             <Plus size={20} />
-                        Lägg till FAQ          </button>
+              {t('admin.faq.addButton')}
+            </button>
         </div>
 
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
           {loading ? (
-            <div className="p-12 text-center text-gray-500">Laddar vanliga frågor...</div>
+            <div className="p-12 text-center text-gray-500">
+              {t('admin.faq.loading')}
+            </div>
           ) : faqs.length === 0 ? (
             <div className="p-12 text-center">
               <HelpCircle className="mx-auto text-gray-400 mb-4" size={48} />
-              <p className="text-gray-600">Inga vanliga frågor än. Lägg till din första vanliga fråga för att komma igång.</p>
+              <p className="text-gray-600">{t('admin.faq.noneYet')}</p>
             </div>
           ) : (
             <div className="divide-y divide-gray-200">
@@ -155,15 +162,15 @@ export default function AdminFAQs() {
                           )}
                           {faq.isActive === false && (
                             <span className="px-2 py-1 bg-gray-200 text-gray-500 rounded text-xs">
-                              Inactive
+                              {t('admin.faq.inactive') ?? 'Inactive'}
                             </span>
                           )}
                           <h3 className="text-lg font-semibold text-gray-900">
-                            {faq.question || 'Ingen fråga'}
+                            {faq.question || t('admin.faq.noQuestion')}
                           </h3>
                         </div>
                         <p className="text-gray-600 mt-2 whitespace-pre-wrap">
-                          {faq.answer || 'Inget svar'}
+                          {faq.answer || t('admin.faq.noAnswer') ?? 'Inget svar'}
                         </p>
                       </div>
                       <div className="flex items-center gap-2 ml-4">
@@ -206,7 +213,9 @@ export default function AdminFAQs() {
                   onClick={(e) => e.stopPropagation()}
                   className="bg-white rounded-2xl p-6 md:p-8 w-full max-w-2xl max-h-[90vh] overflow-y-auto"
                 >
-                  <h2 className="text-2xl font-semibold mb-6">Lägg till nya vanliga frågor</h2>
+                  <h2 className="text-2xl font-semibold mb-6">
+                    {t('admin.faq.addNewTitle')}
+                  </h2>
 
                   <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
@@ -218,7 +227,7 @@ export default function AdminFAQs() {
                         value={formData.question}
                         onChange={(e) => setFormData({ ...formData, question: e.target.value })}
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent outline-none"
-                        placeholder="Skriv in frågan"
+                        placeholder={t('admin.faq.questionPlaceholder')}
                         required
                       />
                     </div>
@@ -232,7 +241,7 @@ export default function AdminFAQs() {
                         onChange={(e) => setFormData({ ...formData, answer: e.target.value })}
                         rows="4"
                         className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent outline-none resize-none"
-                        placeholder="Ange svaret"
+                        placeholder={t('admin.faq.answerPlaceholder') ?? 'Ange svaret'}
                         required
                       />
                     </div>
@@ -250,7 +259,7 @@ export default function AdminFAQs() {
                         min="1"
                       />
                       <p className="mt-1 text-xs text-gray-500">
-                      Valfritt: Ange visningsordningen (lägre siffror visas först)
+                        {t('admin.faq.sortOptional')}
                       </p>
                     </div>
 
@@ -260,7 +269,7 @@ export default function AdminFAQs() {
                         disabled={submitting}
                         className="flex-1 bg-[#4b463f] text-white py-3 rounded-lg font-medium hover:bg-black transition-colors disabled:opacity-60"
                       >
-                        {submitting ? 'Skapande...' : 'Skapa FAQ'}
+                        {submitting ? t('admin.faq.creating') ?? 'Skapande...' : t('admin.faq.createButton') ?? 'Skapa FAQ'}
                       </button>
                       <button
                         type="button"
@@ -270,7 +279,7 @@ export default function AdminFAQs() {
                         }}
                         className="flex-1 bg-gray-100 text-gray-700 py-3 rounded-lg font-medium hover:bg-gray-200 transition-colors"
                       >
-                        Avboka
+                        {t('common.cancel') ?? 'Avboka'}
                       </button>
                     </div>
                   </form>
@@ -306,13 +315,15 @@ export default function AdminFAQs() {
                   </div>
                   
                   <h2 className="text-2xl font-semibold text-center mb-2">
-                  Ta bort FAQ
+                    {t('admin.faq.deleteTitle') ?? 'Ta bort FAQ'}
                   </h2>
                   
                   <p className="text-gray-600 text-center mb-6">
-                  Är du säker på att du vill ta bort FAQ:n
- <span className="font-semibold text-gray-900">"{faqToDelete.question}"</span>? Den här åtgärden kan inte ångras.
-
+                    {t('admin.faq.deleteConfirm')}{' '}
+                    <span className="font-semibold text-gray-900">
+                      "{faqToDelete.question}"
+                    </span>
+                    ? {t('common.cannotUndo') ?? 'Den här åtgärden kan inte ångras.'}
                   </p>
 
                   <div className="flex gap-4">
@@ -322,7 +333,7 @@ export default function AdminFAQs() {
                       disabled={deleting}
                       className="flex-1 bg-gray-100 text-gray-700 py-3 rounded-lg font-medium hover:bg-gray-200 transition-colors disabled:opacity-60"
                     >
-                      Cancel
+                      {t('common.cancel') ?? 'Cancel'}
                     </button>
                     <button
                       type="button"
@@ -333,12 +344,12 @@ export default function AdminFAQs() {
                       {deleting ? (
                         <>
                           <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                          Tar bort...
+                          {t('common.deleting') ?? 'Tar bort...'}
                         </>
                       ) : (
                         <>
                           <Trash2 size={18} />
-                          Radera
+                          {t('common.delete') ?? 'Radera'}
                         </>
                       )}
                     </button>
