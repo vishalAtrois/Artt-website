@@ -1,4 +1,4 @@
-import AboutSection from "@/components/AboutSection";
+// import AboutSection from "@/components/AboutSection";
 import ArtGrid from "@/components/ArtGrid";
 import CategoryNav from "@/components/CategoryNav";
 import ContactSection from "@/components/ContactSection";
@@ -22,11 +22,12 @@ export default function Home() {
         <ArtGrid />
         </section>
         <ViewAllPaintings />
-        <AboutSection />
-<FAQSection />
+        {/* <AboutSection /> */}
         <section className="px-36">
         <CategoryNav />
         </section>
+<FAQSection />
+        
 
         <ContactSection />
         <Footer />
